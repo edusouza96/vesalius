@@ -48,10 +48,16 @@ public class HttpExemplo {
         HttpExemplo http = new HttpExemplo();
         Gson gson = new Gson();
         Type agendaType = new TypeToken<Agenda>(){}.getType();
+        if(agenda.getIdAgenda()>0){
+            String json = gson.toJson(agenda,agendaType);
+            String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/alterar";
+            http.sendPost(url, json, "PUT");
+        }else{
+            String json = gson.toJson(agenda,agendaType);
+            String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/inserir";
+            http.sendPost(url, json, "POST");
+        }
         
-        String json = gson.toJson(agenda,agendaType);
-        String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/inserir";
-        http.sendPost(url, json, "POST");
     }
     
     public static Agenda[] listar() throws Exception{

@@ -59,8 +59,13 @@ public class AgendaBean {
     }
     public String atualizar()
     {
-        new AgendaDAO().salvar(agendaSelecionada);
-        return("/View/Index?faces-redirect=true");
+        try {
+            new HttpExemplo().salvar(agendaSelecionada);
+             new HttpExemplo().listar();
+        } catch (Exception ex) {
+            Logger.getLogger(AgendaBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return(this.editar(agendaSelecionada));
     }
 
     public void remover(Agenda agenda){

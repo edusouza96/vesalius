@@ -1,4 +1,4 @@
-package org.primefaces.showcase.view.data;
+package pf;
 
 import bean.AgendaBean;
 import dao.HttpExemplo;
@@ -43,7 +43,7 @@ public class ScheduleView implements Serializable {
         try {
             Agenda[] agenda = new HttpExemplo().listar();
             for(Agenda a : agenda){
-                eventModel.addEvent(new DefaultScheduleEvent("Paciente", a.getDataAgenda(),horaFinal(a.getDataAgenda())));
+                eventModel.addEvent(new DefaultScheduleEvent("Paciente"+a.getIdAgenda(), a.getDataAgenda(),horaFinal(a.getDataAgenda()),a));
             }
         } catch (Exception ex) {
         }
@@ -117,6 +117,11 @@ public class ScheduleView implements Serializable {
             
         }else{
             eventModel.updateEvent(event);
+            Agenda agenda = (Agenda)event.getData();
+            agenda.setDataAgenda(event.getStartDate());
+            AgendaBean agendaBean = new AgendaBean();
+            agendaBean.setAgendaSelecionada(agenda);
+            agendaBean.atualizar();
         }
         event = new DefaultScheduleEvent();
     }
