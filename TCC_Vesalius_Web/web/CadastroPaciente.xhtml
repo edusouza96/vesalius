@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./Template.xhtml">
+            <ui:define name="content">
+                <style type="text/css">
+                    .semBorda tr, .semBorda td {
+                        border: none !important;
+                    }
+                </style>
+                <h:form>
+                    <div class="ui-fluid"> 
+                        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-10"  styleClass="semBorda" >
+                            <p:outputLabel  for="nomePaciente" value="Nome"/>
+                            <p:outputLabel/>
+                            <p:inputText  id="nomePaciente" value="#{pacienteBean.pacienteSelecionado.nomePaciente}" required="true"/>
+                            
+                            
+                            <p:outputLabel for="nascimentoPaciente" value="Data Nascimento"/>
+                            <p:outputLabel/>
+                            <p:inputMask id="nascimentoPaciente" value="#{pacienteBean.pacienteSelecionado.nascimentoPaciente}" mask="99/99/9999"/>
+                            
+                            
+                            <p:outputLabel for="cpfPaciente" value="CPF"/>
+                            <p:outputLabel/>
+                            <p:inputMask id="cpfPaciente" value="#{pacienteBean.pacienteSelecionado.cpfPaciente}" mask="999.999.999-99"/>
+                            
+                            
+                            <p:outputLabel for="fotoPaciente" value="Foto"/>
+                            <p:outputLabel/>
+                            <p:inputText id="fotoPaciente" value="#{pacienteBean.pacienteSelecionado.fotoPaciente}"/>
+                            
+                            
+                            <p:outputLabel for="profissaoPaciente" value="Profissão"/>
+                            <p:outputLabel/>
+                            <p:inputText id="profissaoPaciente" value="#{pacienteBean.pacienteSelecionado.profissaoPaciente}"/>
+                            
+                            
+                            <p:outputLabel for="emailPaciente" value="E-mail"/>
+                            <p:outputLabel/>
+                            <p:inputText id="emailPaciente" value="#{pacienteBean.pacienteSelecionado.emailPaciente}"/>
+                            
+                            
+                            <p:outputLabel for="indicacaoPaciente" value="Indicado por"/>
+                            <p:outputLabel/>
+                            <p:autoComplete id="indicacaoPaciente" value="#{pacienteBean.pacienteSelecionado.indicacaoPaciente}" completeMethod="#{autoCompleteView.completeText}" />
+                            
+                            
+                            <p:outputLabel for="telefonePaciente" value="Telefone"/>
+                            <p:outputLabel/>
+                            <p:inputText id="telefonePaciente" value="#{pacienteBean.pacienteSelecionado.telefonePaciente}" required="true"/>
+                            
+                            
+                            <p:outputLabel for="telefoneOpcionalPaciente" value="Telefone (Opcional)"/>
+                            <p:outputLabel/>
+                            <p:inputText id="telefoneOpcionalPaciente" value="#{pacienteBean.pacienteSelecionado.telefoneOpcionalPaciente}"/>
+                            
+                            
+                            <p:outputLabel for="whatsappPaciente" value="Whatsapp"/>
+                            <p:outputLabel/>
+                            <p:inputText id="whatsappPaciente" value="#{pacienteBean.pacienteSelecionado.whatsappPaciente}"/>
+                            
+                            
+                            <p:outputLabel for="facebookPaciente" value="Facebook"/>
+                            <p:outputLabel/>
+                            <p:inputText id="facebookPaciente" value="#{pacienteBean.pacienteSelecionado.facebookPaciente}"/>
+                            
+                            
+                            <p:outputLabel for="cidadePaciente" value="Cidade"/>
+                            <p:outputLabel/>
+                            <p:selectOneMenu id="cidadePaciente" value="#{pacienteBean.pacienteSelecionado.cidadePaciente}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" />
+                                <f:selectItem itemLabel="Viamão" itemValue="viamao" />
+                                <f:selectItem itemLabel="Porto Alegre" itemValue="porto alegre" />
+                                <f:selectItem itemLabel="Canoas" itemValue="canoas" />
+                                <f:selectItem itemLabel="Gravataí" itemValue="gravatai" />
+                            </p:selectOneMenu>
+                            
+                            
+                            <p:outputLabel for="bairroPaciente" value="Bairro"/>
+                            <p:outputLabel/>
+                            <p:autoComplete id="bairroPaciente" value="#{pacienteBean.pacienteSelecionado.bairroPaciente}" completeMethod="#{autoCompleteView.completeText}" />
+                            
+                            
+                            <p:outputLabel for="logradouroPaciente" value="Logradouro"/>
+                            <p:outputLabel/>
+                            <p:autoComplete id="logradouroPaciente" value="#{pacienteBean.pacienteSelecionado.logradouroPaciente}" completeMethod="#{autoCompleteView.completeText}" />
+                            
+                            
+                            <p:outputLabel for="numeroPaciente" value="N°"/>
+                            <p:outputLabel/>
+                            <p:inputText id="numeroPaciente" value="#{pacienteBean.pacienteSelecionado.numeroPaciente}" />
+                            
+                            
+                            <p:outputLabel for="inicioTratamentoPaciente" value="Ínicio Tratamento"/>
+                            <p:outputLabel/>
+                            <p:inputMask id="inicioTratamentoPaciente" value="#{pacienteBean.pacienteSelecionado.inicioTratamentoPaciente}" mask="99/99/9999"/>
+                            
+                            
+                            <p:outputLabel for="terminoTratamentoPaciente" value="Término Tratamento"/>
+                            <p:outputLabel/>
+                            <p:inputMask id="terminoTratamentoPaciente" value="#{pacienteBean.pacienteSelecionado.terminoTratamentoPaciente}" mask="99/99/9999"/>
+                            
+                            
+                            <p:outputLabel for="diabetePaciente" value="Diabetes"/>
+                            <p:selectBooleanCheckbox id="diabetePaciente" value="#{pacienteBean.pacienteSelecionado.diabetePaciente}"/>
+                            <p:inputText id="diabeteDescricaoPaciente" placeholder="Observação" value="#{pacienteBean.pacienteSelecionado.diabeteDescricaoPaciente}"/>
+
+                            <p:outputLabel for="aidsPaciente" value="AIDS"/>
+                            <p:selectBooleanCheckbox id="aidsPaciente" value="#{pacienteBean.pacienteSelecionado.aidsPaciente}"/>
+                            <p:inputText id="aidsDescricaoPaciente" placeholder="Observação" value="#{pacienteBean.pacienteSelecionado.aidsDescricaoPaciente}"/>
+
+                            <p:outputLabel for="hepatitePaciente" value="Hepatite"/>
+                            <p:selectBooleanCheckbox id="hepatitePaciente" value="#{pacienteBean.pacienteSelecionado.hepatitePaciente}"/>
+                            <p:inputText id="hepatiteDescricaoPaciente" placeholder="Observação" value="#{pacienteBean.pacienteSelecionado.hepatiteDescricaoPaciente}"/>
+
+                            <p:outputLabel for="fumantePaciente" value="Fumante"/>
+                            <p:selectBooleanCheckbox id="fumantePaciente" value="#{pacienteBean.pacienteSelecionado.fumantePaciente}"/>
+                            <p:inputText id="fumanteDescricaoPaciente" placeholder="Observação" value="#{pacienteBean.pacienteSelecionado.fumanteDescricaoPaciente}"/>
+
+                            <p:outputLabel for="gravidezPaciente" value="Gravidez"/>
+                            <p:selectBooleanCheckbox id="gravidezPaciente" value="#{pacienteBean.pacienteSelecionado.gravidezPaciente}"/>
+                            <p:inputText id="gravidezDescricaoPaciente" placeholder="Observação" value="#{pacienteBean.pacienteSelecionado.gravidezDescricaoPaciente}"/>
+
+                            <p:outputLabel for="alergicoPaciente" value="Alérgico"/>
+                            <p:selectBooleanCheckbox id="alergicoPaciente" value="#{pacienteBean.pacienteSelecionado.alergicoPaciente}"/>
+                            <p:inputText id="alergicoDescricaoPaciente" placeholder="Observação" value="#{pacienteBean.pacienteSelecionado.alergicoDescricaoPaciente}"/>
+
+                            <p:outputLabel for="outrasDoencasPaciente" value="Outras"/>
+                            <p:outputLabel/>
+                            <p:inputText id="outrasDoencasPaciente" value="#{pacienteBean.pacienteSelecionado.outrasDoencasPaciente}"/>
+
+                            <p:commandButton type="reset" value="Limpar" />
+                            <p:outputLabel/>
+                            <p:commandButton id="addButton" value="Salvar" action="#{pacienteBean.adicionar()}"/>
+                        
+                        </p:panelGrid>
+
+                    </div>
+                </h:form>
+               
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+
+</html>

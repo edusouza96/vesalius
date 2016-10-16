@@ -8,69 +8,62 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import model.Agenda;
+import model.Paciente;
 
 
-public class HttpExemplo {
+public class HttpPacienteDAO {
 
    private final String USER_AGENT = "Mozila/5.0";
-   /*
-    public static void main(String[] args)  throws Exception{
-        
-        
-        //getUsuario
-       /* String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/agenda/listar";
-        String json = http.sendGet(chamadaWS, "GET");
-        agendaL = gson.fromJson(json, agendaType);
-        System.out.println(agendaL.toString());
-        
-        
-        
-        //excluirUsuario
-        String chamadaWS = "http://localhost:29583/TesteWebService/webresources/teste/teste/excluirUsuario/user";
-        String retorno = http.sendGet(chamadaWS, "DELETE");
-        System.out.println(retorno);
-        */
-       
-        /*
-        //alterarUsuario
-        usuario.setNome("nome5");
-        usuario.setUsuario("Souza");
-        usuario.setSenha("1234");
-        String json = gson.toJson(usuario,usuarioType);
-        String url = "http://localhost:29583/TesteWebService/webresources/teste/teste/alterarUsuario";
-        http.sendPost(url, json, "PUT");   
-     }
-    */
-    public static void salvar(Agenda agenda) throws Exception{
-        HttpExemplo http = new HttpExemplo();
+   
+   public static void remover(Paciente paciente) throws Exception{
+        HttpPacienteDAO http = new HttpPacienteDAO();
         Gson gson = new Gson();
-        Type agendaType = new TypeToken<Agenda>(){}.getType();
-        if(agenda.getIdAgenda()>0){
-            String json = gson.toJson(agenda,agendaType);
-            String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/alterar";
+        Type pacienteType = new TypeToken<Paciente>(){}.getType();
+        String json = gson.toJson(paciente,pacienteType);
+        String url = "http://localhost:8080/TCC_Vesalius/webresources/paciente/excluir";
+        http.sendPost(url, json, "PUT");
+        
+    }
+   
+    public static void salvar(Paciente paciente) throws Exception{
+        HttpPacienteDAO http = new HttpPacienteDAO();
+        Gson gson = new Gson();
+        Type pacienteType = new TypeToken<Paciente>(){}.getType();
+        if(paciente.getIdPaciente()>0){
+            String json = gson.toJson(paciente,pacienteType);
+            String url = "http://localhost:8080/TCC_Vesalius/webresources/paciente/alterar";
             http.sendPost(url, json, "PUT");
         }else{
-            String json = gson.toJson(agenda,agendaType);
-            String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/inserir";
+            String json = gson.toJson(paciente,pacienteType);
+            String url = "http://localhost:8080/TCC_Vesalius/webresources/paciente/inserir";
             http.sendPost(url, json, "POST");
         }
         
     }
     
-    public static Agenda[] listar() throws Exception{
-        HttpExemplo http = new HttpExemplo();
+    public static Paciente[] listar() throws Exception{
+        HttpPacienteDAO http = new HttpPacienteDAO();
         Gson gson = new Gson();
-        Type agendaType = new TypeToken<Agenda>(){}.getType();
+        Type pacienteType = new TypeToken<Paciente>(){}.getType();
         
         
-        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/agenda/listar";
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/paciente/listar";
         String json = http.sendGet(chamadaWS, "GET");
-        Agenda[] agenda = gson.fromJson(json, Agenda[].class);
-        return agenda;
+        Paciente[] paciente = gson.fromJson(json, Paciente[].class);
+        return paciente;
     }
+    
+    public static Paciente buscar(Paciente pacienteParametro) throws Exception{
+        HttpPacienteDAO http = new HttpPacienteDAO();
+        Gson gson = new Gson();
+        Type pacienteType = new TypeToken<Paciente>(){}.getType();
+               
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/paciente/busca/"+pacienteParametro.getIdPaciente();
+        String json = http.sendGet(chamadaWS, "GET");
+        Paciente paciente = gson.fromJson(json, Paciente.class);
+        return paciente;
+    }
+    
     
     private String sendGet(String url, String method) throws Exception{
        

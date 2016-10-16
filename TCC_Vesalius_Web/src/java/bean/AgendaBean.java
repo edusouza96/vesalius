@@ -1,7 +1,6 @@
 package bean;
 
 import dao.*;
-import java.util.ArrayList;
 import model.Agenda;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,8 +44,8 @@ public class AgendaBean {
     public String adicionar()
     {
         try {
-            new HttpExemplo().salvar(agendaSelecionada);
-            new HttpExemplo().listar();
+            new HttpAgendaDAO().salvar(agendaSelecionada);
+            new HttpAgendaDAO().listar();
         } catch (Exception ex) {
             Logger.getLogger(AgendaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,8 +59,8 @@ public class AgendaBean {
     public String atualizar()
     {
         try {
-            new HttpExemplo().salvar(agendaSelecionada);
-             new HttpExemplo().listar();
+            new HttpAgendaDAO().salvar(agendaSelecionada);
+             new HttpAgendaDAO().listar();
         } catch (Exception ex) {
             Logger.getLogger(AgendaBean.class.getName()).log(Level.SEVERE, null, ex);
         }

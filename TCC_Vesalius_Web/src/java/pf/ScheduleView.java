@@ -1,15 +1,10 @@
 package pf;
 
 import bean.AgendaBean;
-import dao.HttpExemplo;
+import dao.HttpAgendaDAO;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -41,7 +36,7 @@ public class ScheduleView implements Serializable {
     public void init() {
         eventModel = new DefaultScheduleModel();
         try {
-            Agenda[] agenda = new HttpExemplo().listar();
+            Agenda[] agenda = new HttpAgendaDAO().listar();
             for(Agenda a : agenda){
                 eventModel.addEvent(new DefaultScheduleEvent("Paciente"+a.getIdAgenda(), a.getDataAgenda(),horaFinal(a.getDataAgenda()),a));
             }
