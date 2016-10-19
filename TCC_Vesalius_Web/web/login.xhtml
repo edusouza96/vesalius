@@ -7,9 +7,10 @@
     </h:head>
     <h:body>
         <h:form>
-            <h:panelGrid columns="2" >
-                
-                <h:commandButton value="Cadastrar" action="#{loginBean.verificarAcesso(4, 'CadastroPaciente')}"/>
+            <h:panelGrid columns="3" >
+                <h:commandButton value="Dentista" action="#{loginBean.verificarAcesso(25, 'Agenda')}"/>
+                <h:commandButton value="Secretaria" action="#{loginBean.verificarAcesso(4, 'Agenda')}"/>
+                <h:commandButton value="Paciente" action="#{loginBean.verificarAcesso(19, 'Agenda')}"/>
             </h:panelGrid>
         </h:form>
     </h:body>

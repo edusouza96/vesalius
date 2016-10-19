@@ -15,6 +15,7 @@ import model.Tipo_Acessos;
 @SessionScoped
 public class LoginBean {
 
+    public Paciente pacienteLogado;
 
    
     public String verificarAcesso(int id, String pagina) {
@@ -25,6 +26,7 @@ public class LoginBean {
             for (Paciente paciente : listaPacientes) {
                 if (paciente.getIdPaciente() == id) {
                     Tipo_Acessos tAcesso  = new HttpTipoAcessosDAO().buscar(paciente.getTipoAcessos());
+                    pacienteLogado = paciente;
                     if(tAcesso.getPacienteTipoAcessos() == 1){
                         return ("/"+pagina+"?faces-redirect=true");
                     }else{
