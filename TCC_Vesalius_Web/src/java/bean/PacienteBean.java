@@ -41,7 +41,7 @@ public class PacienteBean {
         
     public String novo(){
         pacienteSelecionado =new Paciente();
-        return("ListaPacientes?faces-redirect=true");
+        return("CadastroPaciente?faces-redirect=true");
     }
 
     public String adicionar(){
@@ -71,7 +71,8 @@ public class PacienteBean {
         } catch (Exception ex) {
             Logger.getLogger(PacienteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return(this.novo());
+        pacienteSelecionado = new Paciente();
+        return("ListaPacientes?faces-redirect=true");
     }
 
     public String editar(Paciente paciente){

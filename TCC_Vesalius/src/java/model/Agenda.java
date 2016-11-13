@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -16,7 +17,8 @@ public class Agenda {
     @Id 
     @GeneratedValue
     private int idAgenda;
-    private int paciente;
+    @ManyToOne
+    private Paciente paciente;
     private Date dataAgenda;
     private String horaAgenda;
     private int servico;
@@ -29,7 +31,7 @@ public class Agenda {
      * @param horaAgenda = hora da consulta
      * @param servico = relaciona um serviço com a consulta
      */
-    public Agenda(int idAgenda, int paciente, Date dataAgenda, String horaAgenda, int servico) {
+    public Agenda(int idAgenda, Paciente paciente, Date dataAgenda, String horaAgenda, int servico) {
         this.idAgenda = idAgenda;
         this.paciente = paciente;
         this.dataAgenda = dataAgenda;
@@ -63,7 +65,7 @@ public class Agenda {
      * getter de paciente
      * @return um int
      */
-    public int getPaciente() {
+    public Paciente getPaciente() {
         return paciente;
     }
 
@@ -72,7 +74,7 @@ public class Agenda {
      * recebe por parametro um int
      * @param paciente 
      */
-    public void setPaciente(int paciente) {
+    public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
 

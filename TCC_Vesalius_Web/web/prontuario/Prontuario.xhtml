@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../Template.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:dataTable var="prontuario" value="#{prontuarioBean.listaProntuarios}" style="margin-top:40px">
+                        <f:facet name="header">
+                            <p:commandButton icon="ui-icon-plus" title="Adicionar" value="Prontuario" type="button" onclick="PF('adicionar').show();" />
+                        </f:facet>
+
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column headerText="Data"/>
+                                <p:column headerText="Dente"/>
+                                <p:column headerText="Procedimento"/>
+                                <p:column headerText="Tratamento Realizado"/>
+                                <p:column headerText="Tempo"/>
+                            </p:row>
+                        </p:columnGroup>
+
+                        <p:column>
+                            <h:outputText value="#{prontuario.dataProntuario}" />
+                        </p:column>
+
+                        <p:column>
+                            <h:outputText value="#{prontuario.denteProntuario}" />
+                        </p:column>
+                        
+                        <p:column>
+                            <h:outputText value="#{prontuario.procedimento.nomeProcedimento}" />
+                        </p:column>
+                        
+                        <p:column>
+                            <h:outputText value="#{prontuario.descricaoProntuario}" />
+                        </p:column>
+                        
+                        <p:column>
+                            <h:outputText value="#{prontuario.tempoProntuario}" />
+                        </p:column>
+                        
+                    </p:dataTable>
+                    
+                </h:form>
+                <h:form>
+                    <p:dialog widgetVar="adicionar" modal="true" header="Prontuario" showEffect="clip" hideEffect="clip">
+                        <h:panelGrid id="eventDetails" columns="2">
+                            <p:outputLabel  for="denteProntuario" value="Dente"/>
+                            <p:inputText  id="denteProntuario" value="#{prontuarioBean.prontuarioSelecionado.denteProntuario}"/>
+
+                            <p:outputLabel  for="descricaoProntuario" value="Tratamento Realizado"/>
+                            <p:inputText  id="descricaoProntuario" value="#{prontuarioBean.prontuarioSelecionado.descricaoProntuario}"/>
+                            
+                            <p:outputLabel for="procedimento" value="Procedimentos" />
+                            <p:selectOneMenu id="procedimento" value="#{prontuarioBean.prontuarioSelecionado.procedimento}" style="width:100%">
+                                <f:selectItems value="#{procedimentoBean.listaProcedimentos}" var="proc" itemLabel="#{proc.nomeProcedimento}" itemValue="#{proc}" />
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel  for="tempoProntuario" value="Tempo"/>
+                            <p:inputText  id="tempoProntuario" value="#{prontuarioBean.prontuarioSelecionado.tempoProntuario}"/>
+
+                            <p:commandButton type="reset" value="Limpar" />
+                            <p:commandButton id="addButton" value="Salvar" action="#{prontuarioBean.adicionar()}"/>
+                        </h:panelGrid>
+                    </p:dialog>   
+                </h:form>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

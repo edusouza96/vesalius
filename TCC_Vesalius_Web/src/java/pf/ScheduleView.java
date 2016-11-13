@@ -2,9 +2,12 @@ package pf;
 
 import bean.AgendaBean;
 import dao.HttpAgendaDAO;
+import dao.HttpPacienteDAO;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import model.Agenda;
+import model.Paciente;
  
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
@@ -38,7 +42,7 @@ public class ScheduleView implements Serializable {
         try {
             Agenda[] agenda = new HttpAgendaDAO().listar();
             for(Agenda a : agenda){
-                eventModel.addEvent(new DefaultScheduleEvent("Paciente"+a.getIdAgenda(), a.getDataAgenda(),horaFinal(a.getDataAgenda()),a));
+                eventModel.addEvent(new DefaultScheduleEvent(a.getPaciente().getNomePaciente(), a.getDataAgenda(),horaFinal(a.getDataAgenda()),a));
             }
         } catch (Exception ex) {
         }
@@ -104,11 +108,22 @@ public class ScheduleView implements Serializable {
     public void addEvent(ActionEvent actionEvent) {
         if(event.getId() == null){
             eventModel.addEvent(event);
+            try {
+                Paciente[] listaPaciente = new HttpPacienteDAO().listar();
+                Paciente paciente = new Paciente();
+                for(Paciente pac: listaPaciente){
+                    if(pac.getNomePaciente().equalsIgnoreCase(event.getTitle())){
+                        paciente = pac;
+                    }
+                }
+                Agenda agenda = new Agenda(paciente,event.getStartDate() , 2);
+                AgendaBean agendaBean = new AgendaBean();
+                agendaBean.setAgendaSelecionada(agenda);
+                agendaBean.adicionar();
+            } catch (Exception ex) {
+                System.err.println(ex);
+            }
             
-            Agenda agenda = new Agenda(0, 1,event.getStartDate() , "00:00", 2);
-            AgendaBean agendaBean = new AgendaBean();
-            agendaBean.setAgendaSelecionada(agenda);
-            agendaBean.adicionar();
             
         }else{
             eventModel.updateEvent(event);

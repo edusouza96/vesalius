@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../Template.xhtml">
+
+            <ui:define name="content">
+                <style type="text/css">
+                    .semBorda tr, .semBorda td {
+                        border: none !important;
+                    }
+                </style>
+                <h:form>
+                    <div class="ui-fluid"> 
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-10"  styleClass="semBorda" >
+                            <p:outputLabel  for="nomeProcedimento" value="Nome"/>
+                            <p:inputText  id="nomeProcedimento" value="#{procedimentoBean.procedimentoSelecionado.nomeProcedimento}" required="true"/>
+
+                            <p:outputLabel  for="valorProcedimento" value="Valor"/>
+                            <p:inputText  id="valorProcedimento" value="#{procedimentoBean.procedimentoSelecionado.valorProcedimento}" required="true"/>
+
+                            <p:commandButton type="reset" value="Limpar" />
+                            <p:commandButton id="addButton" value="Salvar" action="#{procedimentoBean.adicionar()}"/>
+                        
+                        </p:panelGrid>
+
+                    </div>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

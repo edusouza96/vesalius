@@ -5,7 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import model.Agenda;
+import model.Prontuario;
 
 /**
  *
@@ -13,77 +13,77 @@ import model.Agenda;
  * com os  metodos de inserir, listar, procurarPorId, atualiar, deletar
  * 
  */
-public class AgendaDAO implements Dao{
+public class ProntuarioDAO implements Dao{
  
     /**
-     * metodo construtor da classe agendaDAO
+     * metodo construtor da classe prontuarioDAO
      */
-    public AgendaDAO(){    
+    public ProntuarioDAO(){    
     }
       
     /**
-     * salva um registro na tabela agenda
-     * Recebe por parametro um objeto do tipo Agenda 
-     * @param agendaParametro
+     * salva um registro na tabela prontuario
+     * Recebe por parametro um objeto do prontuario
+     * @param prontuarioParametro
      */
     @Override
-    public void salvar(Object agendaParametro) {
-        Agenda agenda;
-        agenda = (Agenda) agendaParametro;
+    public void salvar(Object prontuarioParametro) {
+        Prontuario prontuario;
+        prontuario = (Prontuario) prontuarioParametro;
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("vesaliusPU"); 
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
-        if(agenda.getIdAgenda() == 0){
-            em.persist(agenda);
+        if(prontuario.getIdProntuario() == 0){
+            em.persist(prontuario);
         }else{
-            em.merge(agenda);
+            em.merge(prontuario);
         }
         em.getTransaction().commit();
         em.close();
     }
 
     /**
-     * Exclui um registro da tabela agenda 
-     * Recebe por parametro um objeto do tipo agenda
-     * @param agendaParametro 
+     * Exclui um registro da tabela prontuario 
+     * Recebe por parametro um objeto do tipo prontuario
+     * @param prontuarioParametro 
      */
     @Override
-    public void deletar(Object agendaParametro) {
-        Agenda agenda;
-        agenda = (Agenda) agendaParametro;
+    public void deletar(Object prontuarioParametro) {
+        Prontuario prontuario;
+        prontuario = (Prontuario) prontuarioParametro;
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("vesaliusPU"); 
         EntityManager em = factory.createEntityManager();
         em.getTransaction().begin();
-        em.remove(em.merge(agenda));
+        em.remove(em.merge(prontuario));
         em.getTransaction().commit();
         em.close();
     }
     
     /**
-     * Lista todos os registros da agenda
+     * Lista todos os registros da prontuario
      * @return uma list
      */
     @Override
-    public List<Agenda> listar(){
+    public List<Prontuario> listar(){
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("vesaliusPU"); 
         EntityManager em = factory.createEntityManager();
-        List<Agenda> listaAgenda = em.createQuery("SELECT age FROM Agenda age").getResultList();       
+        List<Prontuario> listaProntuario = em.createQuery("SELECT pron FROM Prontuario pron").getResultList();       
         em.close();
-        return (listaAgenda);
+        return (listaProntuario);
     }
     /**
      * Procura um registro a partir de um ID escolhido
-     * Recebe por parametro um id da agenda do tipo int
+     * Recebe por parametro um id da prontuario do tipo int
      * @param id
-     * @return um objeto do tipo agenda
+     * @return um objeto do tipo prontuario
      */
     @Override
     public Object procurarPorId(int id) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("vesaliusPU"); 
         EntityManager em = factory.createEntityManager();
-        Agenda agenda = em.find(Agenda.class, id);
+        Prontuario prontuario = em.find(Prontuario.class, id);
         em.close();
-        return (agenda);
+        return (prontuario);
     }
      
 

@@ -1,11 +1,8 @@
 package filter;
 
 import bean.LoginBean;
-import bean.PacienteBean;
 import dao.HttpTipoAcessosDAO;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -34,6 +31,7 @@ public class AgendaFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         int acesso = 0;
         try {

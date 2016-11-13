@@ -8,24 +8,20 @@ import java.util.Date;
  */
 public class Agenda {
     private int idAgenda;
-    private int paciente;
+    private Paciente paciente;
     private Date dataAgenda;
     private String horaAgenda;
     private int servico;
 
     /**
      * Construtor da classe com os parametros:
-     * @param idAgenda = id do registro da agenda
      * @param paciente = relaciona o paciente com a consulta
      * @param dataAgenda = data da consulta
-     * @param horaAgenda = hora da consulta
      * @param servico = relaciona um serviço com a consulta
      */
-    public Agenda(int idAgenda, int paciente, Date dataAgenda, String horaAgenda, int servico) {
-        this.idAgenda = idAgenda;
+    public Agenda(Paciente paciente, Date dataAgenda, int servico) {
         this.paciente = paciente;
         this.dataAgenda = dataAgenda;
-        this.horaAgenda = horaAgenda;
         this.servico = servico;
     }
     /**
@@ -53,18 +49,18 @@ public class Agenda {
 
     /**
      * getter de paciente
-     * @return um int
+     * @return um paciente
      */
-    public int getPaciente() {
+    public Paciente getPaciente() {
         return paciente;
     }
 
     /**
      * setter de paciente
-     * recebe por parametro um int
+     * recebe por parametro um paciente
      * @param paciente 
      */
-    public void setPaciente(int paciente) {
+    public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
 

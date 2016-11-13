@@ -8,51 +8,60 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import model.Agenda;
+import model.Prontuario;
 
 
-public class HttpAgendaDAO {
+public class HttpProntuarioDAO {
 
    private final String USER_AGENT = "Mozila/5.0";
-    public static void salvar(Agenda agenda) throws Exception{
-        HttpAgendaDAO http = new HttpAgendaDAO();
+   
+   public static void remover(Prontuario prontuario) throws Exception{
+        HttpProntuarioDAO http = new HttpProntuarioDAO();
         Gson gson = new Gson();
-        Type agendaType = new TypeToken<Agenda>(){}.getType();
-        if(agenda.getIdAgenda()>0){
-            String json = gson.toJson(agenda,agendaType);
-            String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/alterar";
+        Type prontuarioType = new TypeToken<Prontuario>(){}.getType();
+        String json = gson.toJson(prontuario,prontuarioType);
+        String url = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/excluir";
+        http.sendPost(url, json, "PUT");
+    }
+   
+    public static void salvar(Prontuario prontuario) throws Exception{
+        HttpProntuarioDAO http = new HttpProntuarioDAO();
+        Gson gson = new Gson();
+        Type prontuarioType = new TypeToken<Prontuario>(){}.getType();
+        if(prontuario.getIdProntuario()>0){
+            String json = gson.toJson(prontuario,prontuarioType);
+            String url = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/alterar";
             http.sendPost(url, json, "PUT");
         }else{
-            String json = gson.toJson(agenda,agendaType);
-            String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/inserir";
+            String json = gson.toJson(prontuario,prontuarioType);
+            String url = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/inserir";
             http.sendPost(url, json, "POST");
         }
     }
     
-    public static Agenda[] listar() throws Exception{
-        HttpAgendaDAO http = new HttpAgendaDAO();
+    public static Prontuario[] listar() throws Exception{
+        HttpProntuarioDAO http = new HttpProntuarioDAO();
         Gson gson = new Gson();
-        Type agendaType = new TypeToken<Agenda>(){}.getType();
+        Type prontuarioType = new TypeToken<Prontuario>(){}.getType();
         
-        
-        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/agenda/listar";
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/listar";
         String json = http.sendGet(chamadaWS, "GET");
-        Agenda[] agenda = gson.fromJson(json, Agenda[].class);
-        return agenda;
+        Prontuario[] prontuario = gson.fromJson(json, Prontuario[].class);
+        return prontuario;
     }
     
-    public static void remover(Agenda agenda) throws Exception{
-        HttpAgendaDAO http = new HttpAgendaDAO();
+    public static Prontuario buscar(Prontuario prontuarioParametro) throws Exception{
+        HttpProntuarioDAO http = new HttpProntuarioDAO();
         Gson gson = new Gson();
-        Type agendaType = new TypeToken<Agenda>(){}.getType();
-        String json = gson.toJson(agenda,agendaType);
-        String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/excluir";
-        http.sendPost(url, json, "PUT");
-        
+        Type prontuarioType = new TypeToken<Prontuario>(){}.getType();
+               
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/busca/"+prontuarioParametro.getIdProntuario();
+        String json = http.sendGet(chamadaWS, "GET");
+        Prontuario prontuario = gson.fromJson(json, Prontuario.class);
+        return prontuario;
     }
     
     private String sendGet(String url, String method) throws Exception{
-       
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod(method);

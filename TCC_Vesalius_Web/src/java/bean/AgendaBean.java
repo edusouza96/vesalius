@@ -2,7 +2,6 @@ package bean;
 
 import dao.*;
 import model.Agenda;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.SessionScoped;
@@ -31,9 +30,13 @@ public class AgendaBean {
         this.agendaSelecionada = agendaSelecionada;
     }
     
-    public List<Agenda> getListaAgendas() {
-        return new AgendaDAO().listar();
-        
+    public Agenda[] getListaAgendas() {
+        try {
+            return new HttpAgendaDAO().listar();
+        } catch (Exception ex) {
+            System.out.println("");
+            return null;
+        } 
     }
     
     public String novo(){
@@ -67,8 +70,13 @@ public class AgendaBean {
         return(this.editar(agendaSelecionada));
     }
 
-    public void remover(Agenda agenda){
-        new AgendaDAO().deletar(agenda);
+    public String remover(Agenda agenda){
+        try {
+            new HttpAgendaDAO().remover(agenda);
+        } catch (Exception ex) {
+            Logger.getLogger(PacienteBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return("Agenda?faces-redirect=true");
     }
     
 }
