@@ -15,7 +15,16 @@ public class Prontuario{
     private double tempoProntuario;
     private Paciente paciente;
     private Procedimento procedimento;
+    private int idProcedimento;
 
+    public int getIdProcedimento() {
+        return idProcedimento;
+    }
+
+    public void setIdProcedimento(int idProcedimento) {
+        this.idProcedimento = idProcedimento;
+    }
+     
     public Prontuario() {
     }
 

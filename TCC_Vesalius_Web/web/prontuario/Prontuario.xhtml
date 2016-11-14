@@ -28,7 +28,7 @@
                         </p:columnGroup>
 
                         <p:column>
-                            <h:outputText value="#{prontuario.dataProntuario}" />
+                            <h:outputText value="#{prontuarioBean.exibirData(prontuario.dataProntuario)}" />
                         </p:column>
 
                         <p:column>
@@ -49,8 +49,7 @@
                         
                     </p:dataTable>
                     
-                </h:form>
-                <h:form>
+                
                     <p:dialog widgetVar="adicionar" modal="true" header="Prontuario" showEffect="clip" hideEffect="clip">
                         <h:panelGrid id="eventDetails" columns="2">
                             <p:outputLabel  for="denteProntuario" value="Dente"/>
@@ -60,8 +59,8 @@
                             <p:inputText  id="descricaoProntuario" value="#{prontuarioBean.prontuarioSelecionado.descricaoProntuario}"/>
                             
                             <p:outputLabel for="procedimento" value="Procedimentos" />
-                            <p:selectOneMenu id="procedimento" value="#{prontuarioBean.prontuarioSelecionado.procedimento}" style="width:100%">
-                                <f:selectItems value="#{procedimentoBean.listaProcedimentos}" var="proc" itemLabel="#{proc.nomeProcedimento}" itemValue="#{proc}" />
+                            <p:selectOneMenu id="procedimento" value="#{prontuarioBean.prontuarioSelecionado.idProcedimento}" style="width:100%">
+                                <f:selectItems value="#{procedimentoBean.listaProcedimentos}" var="proc" itemLabel="#{proc.nomeProcedimento}" itemValue="#{proc.idProcedimento}" />
                             </p:selectOneMenu>
                             
                             <p:outputLabel  for="tempoProntuario" value="Tempo"/>

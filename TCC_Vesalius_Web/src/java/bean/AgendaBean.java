@@ -1,6 +1,8 @@
 package bean;
 
 import dao.*;
+import java.util.ArrayList;
+import java.util.List;
 import model.Agenda;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +27,7 @@ public class AgendaBean {
     public Agenda getAgendaSelecionada() {
         return agendaSelecionada;
     }
-
+    
     public void setAgendaSelecionada(Agenda agendaSelecionada) {
         this.agendaSelecionada = agendaSelecionada;
     }

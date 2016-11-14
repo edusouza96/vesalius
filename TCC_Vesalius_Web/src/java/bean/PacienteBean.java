@@ -1,6 +1,7 @@
 package bean;
 
 import dao.HttpPacienteDAO;
+import java.util.ArrayList;
 import java.util.List;
 import model.Paciente;
 import java.util.logging.Level;
@@ -22,7 +23,22 @@ public class PacienteBean {
         pacienteSelecionado = new Paciente();
     }
     
-     public Paciente[] getListaPacientes() {
+    public List<String> completeText(String query) {
+        try {
+            Paciente[] pacientes = new HttpPacienteDAO().listar();
+            List<String> results = new ArrayList<String>();
+            for(Paciente pac: pacientes) {
+                if(pac.getNomePaciente().toLowerCase().contains(query.toLowerCase())){
+                    results.add(pac.getNomePaciente());
+                }
+            }
+            return results;
+        } catch (Exception ex) {
+            return null;
+        }       
+    }
+    
+    public Paciente[] getListaPacientes() {
         try {
             return new HttpPacienteDAO().listar();
         } catch (Exception ex) {

@@ -19,7 +19,6 @@ public class Prontuario implements Serializable{
     @Id 
     @GeneratedValue
     private int idProntuario;
-    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataProntuario;
     private String denteProntuario;
     private String descricaoProntuario;

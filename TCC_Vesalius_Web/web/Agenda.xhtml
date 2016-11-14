@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     
     <body>
@@ -29,13 +30,16 @@
                     <p:dialog widgetVar="eventDialog" header="Marcar Consulta" showEffect="clip" hideEffect="clip">
                         <h:panelGrid id="eventDetails" columns="2">
                             <p:outputLabel for="paciente" value="Paciente" />
-                            <p:inputText id="paciente" value="#{scheduleView.event.title}" required="true" />
+                            
+                            <p:autoComplete id="paciente" minQueryLength="3" maxResults="5" value="#{scheduleView.event.title}" completeMethod="#{pacienteBean.completeText}" effect="fade" />
 
                             <p:outputLabel for="dataHoraAgenda" value="Data e Hora" />
                             <p:calendar id="dataHoraAgenda" value="#{scheduleView.event.startDate}" timeZone="GMT-3" pattern="dd/MM/yyyy HH:mm"/>
 
                             <p:outputLabel for="procedimento" value="Procedimento" />
-                            <p:inputText id="procedimento" value="#{scheduleView.event.description}" required="true" />
+                            <p:selectOneMenu id="procedimento" value="#{scheduleView.event.description}" style="width:100%">
+                                <f:selectItems value="#{procedimentoBean.listaProcedimentos}" var="proc" itemLabel="#{proc.nomeProcedimento}" itemValue="#{proc.idProcedimento}" />
+                            </p:selectOneMenu>
 
                             <p:commandButton type="reset" value="Limpar" />
                             <p:commandButton id="addButton" value="Salvar" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />

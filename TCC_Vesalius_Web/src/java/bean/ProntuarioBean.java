@@ -1,9 +1,9 @@
 package bean;
 
+import dao.HttpProcedimentoDAO;
 import dao.HttpProntuarioDAO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import model.Prontuario;
@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import model.Paciente;
+import model.Procedimento;
 
 /**
  *
@@ -28,6 +29,13 @@ public class ProntuarioBean {
         return pacienteSelecionado;
     }
     
+    public String exibirData(Date data){
+        if(data == null){
+            return "";
+        }else{
+            return new SimpleDateFormat("dd/MM/yyyy").format(data);
+        }
+    }
     public ProntuarioBean() {
         prontuarioSelecionado = new Prontuario();
     }
@@ -71,6 +79,13 @@ public class ProntuarioBean {
     public String adicionar(){
         try {
             prontuarioSelecionado.setPaciente(pacienteSelecionado);
+            prontuarioSelecionado.setDataProntuario(new Date(System.currentTimeMillis()));
+            for(Procedimento proc: new HttpProcedimentoDAO().listar()){
+                if(proc.getIdProcedimento() == prontuarioSelecionado.getIdProcedimento()){
+                    prontuarioSelecionado.setProcedimento(proc);
+                }
+            }
+                       
             new HttpProntuarioDAO().salvar(prontuarioSelecionado);
             new HttpProntuarioDAO().listar();
         } catch (Exception ex) {

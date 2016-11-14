@@ -116,7 +116,7 @@ public class ScheduleView implements Serializable {
                         paciente = pac;
                     }
                 }
-                Agenda agenda = new Agenda(paciente,event.getStartDate() , 2);
+                Agenda agenda = new Agenda(paciente,event.getStartDate() , Integer.parseInt(event.getDescription()));
                 AgendaBean agendaBean = new AgendaBean();
                 agendaBean.setAgendaSelecionada(agenda);
                 agendaBean.adicionar();
@@ -129,6 +129,7 @@ public class ScheduleView implements Serializable {
             eventModel.updateEvent(event);
             Agenda agenda = (Agenda)event.getData();
             agenda.setDataAgenda(event.getStartDate());
+            agenda.setServico(Integer.parseInt(event.getDescription()));
             AgendaBean agendaBean = new AgendaBean();
             agendaBean.setAgendaSelecionada(agenda);
             agendaBean.atualizar();
