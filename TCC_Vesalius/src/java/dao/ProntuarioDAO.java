@@ -40,6 +40,7 @@ public class ProntuarioDAO implements Dao{
         }
         em.getTransaction().commit();
         em.close();
+        factory.close();
     }
 
     /**
@@ -57,6 +58,7 @@ public class ProntuarioDAO implements Dao{
         em.remove(em.merge(prontuario));
         em.getTransaction().commit();
         em.close();
+        factory.close();
     }
     
     /**
@@ -69,6 +71,7 @@ public class ProntuarioDAO implements Dao{
         EntityManager em = factory.createEntityManager();
         List<Prontuario> listaProntuario = em.createQuery("SELECT pron FROM Prontuario pron").getResultList();       
         em.close();
+        factory.close();
         return (listaProntuario);
     }
     /**
@@ -83,6 +86,7 @@ public class ProntuarioDAO implements Dao{
         EntityManager em = factory.createEntityManager();
         Prontuario prontuario = em.find(Prontuario.class, id);
         em.close();
+        factory.close();
         return (prontuario);
     }
      

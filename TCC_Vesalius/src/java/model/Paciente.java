@@ -33,7 +33,7 @@ public class Paciente {
     private String logradouroPaciente;
     private String numeroPaciente;
     private Date inicioTratamentoPaciente;
-    private Date terminoTratamentoPaciente;
+    private String descricaoPaciente;
     private boolean diabetePaciente;
     private String diabeteDescricaoPaciente;
     private boolean aidsPaciente;
@@ -340,16 +340,16 @@ public class Paciente {
      * 
      * @return 
      */
-    public Date getTerminoTratamentoPaciente() {
-        return terminoTratamentoPaciente;
+    public String getDescricaoPaciente() {
+        return descricaoPaciente;
     }
 
     /**
      * 
-     * @param terminoTratamentoPaciente 
+     * @param descricaoPaciente 
      */
-    public void setTerminoTratamentoPaciente(Date terminoTratamentoPaciente) {
-        this.terminoTratamentoPaciente = terminoTratamentoPaciente;
+    public void setDescricaoPaciente(String descricaoPaciente) {
+        this.descricaoPaciente = descricaoPaciente;
     }
 
     /**

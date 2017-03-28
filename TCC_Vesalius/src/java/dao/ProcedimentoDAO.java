@@ -40,6 +40,7 @@ public class ProcedimentoDAO implements Dao{
         }
         em.getTransaction().commit();
         em.close();
+        factory.close();
     }
 
     /**
@@ -57,6 +58,7 @@ public class ProcedimentoDAO implements Dao{
         em.remove(em.merge(procedimento));
         em.getTransaction().commit();
         em.close();
+        factory.close();
     }
     
     /**
@@ -69,6 +71,7 @@ public class ProcedimentoDAO implements Dao{
         EntityManager em = factory.createEntityManager();
         List<Procedimento> listaProcedimento = em.createQuery("SELECT proc FROM Procedimento proc").getResultList();       
         em.close();
+        factory.close();
         return (listaProcedimento);
     }
     /**
@@ -78,11 +81,12 @@ public class ProcedimentoDAO implements Dao{
      * @return um objeto do tipo procedimento
      */
     @Override
-    public Object procurarPorId(int id) {
+    public Procedimento procurarPorId(int id) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("vesaliusPU"); 
         EntityManager em = factory.createEntityManager();
         Procedimento procedimento = em.find(Procedimento.class, id);
         em.close();
+        factory.close();
         return (procedimento);
     }
      

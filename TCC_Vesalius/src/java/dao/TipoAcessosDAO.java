@@ -34,6 +34,7 @@ public class TipoAcessosDAO implements Dao{
         EntityManager em = factory.createEntityManager();
         Tipo_Acessos tAcesso = em.find(Tipo_Acessos.class, id);
         em.close();
+        factory.close();
         return (tAcesso);
     }
 

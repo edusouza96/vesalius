@@ -40,6 +40,7 @@ public class AgendaDAO implements Dao{
         }
         em.getTransaction().commit();
         em.close();
+        factory.close();
     }
 
     /**
@@ -57,6 +58,7 @@ public class AgendaDAO implements Dao{
         em.remove(em.merge(agenda));
         em.getTransaction().commit();
         em.close();
+        factory.close();
     }
     
     /**
@@ -69,6 +71,7 @@ public class AgendaDAO implements Dao{
         EntityManager em = factory.createEntityManager();
         List<Agenda> listaAgenda = em.createQuery("SELECT age FROM Agenda age").getResultList();       
         em.close();
+        factory.close();
         return (listaAgenda);
     }
     /**
@@ -83,6 +86,7 @@ public class AgendaDAO implements Dao{
         EntityManager em = factory.createEntityManager();
         Agenda agenda = em.find(Agenda.class, id);
         em.close();
+        factory.close();
         return (agenda);
     }
      

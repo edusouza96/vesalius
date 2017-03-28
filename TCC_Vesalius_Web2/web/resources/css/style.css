@@ -1,0 +1,52 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29/01/2017, 15:39:01
+    Author     : Edu
+*/
+
+#headTable{
+    text-align: center;
+    background: #007fbf;
+    font-size: 16px;
+    color: #fff;
+}
+#btnAdicionar{
+    float: right;
+    font-size: 14px;
+}
+
+.cadastro-completo, .cadastro-doenca{
+    display: none;
+}
+
+.menuPaciente {
+    background-color: #007fbf;
+    color: #fff;
+    border-radius: 50px;
+    height: 40px;
+    padding-top: 8px;
+}
+
+.menuPacienteSpan{
+    margin-left: 30px;
+    font-size: 17px;
+}
+
+.menuPaciente :hover{
+    background-color: #004d73;
+    padding: 10px 0;
+}
+
+#ok{
+    margin: 0 0 18px 150px;
+    background: #11c116;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 10px;
+    width: 18%;
+    text-align: center;
+}

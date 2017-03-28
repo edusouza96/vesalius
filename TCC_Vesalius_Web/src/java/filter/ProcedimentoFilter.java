@@ -66,6 +66,8 @@ public class ProcedimentoFilter implements Filter {
                 return tipoAcesso.getPacienteTipoAcessos();
             case "/procedimento/ListaProcedimentos.xhtml":
                 return tipoAcesso.getProcedimentoTipoAcessos();
+            case "/procedimento/CadastroProcedimento.xhtml":
+                return tipoAcesso.getProcedimentoTipoAcessos();
             default:
                 return 0;
         }

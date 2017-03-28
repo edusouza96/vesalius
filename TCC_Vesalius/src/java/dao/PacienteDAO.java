@@ -40,6 +40,7 @@ public class PacienteDAO implements Dao{
         }
         em.getTransaction().commit();
         em.close();
+        factory.close();
     }
 
     /**
@@ -57,6 +58,7 @@ public class PacienteDAO implements Dao{
         em.remove(em.merge(paciente));
         em.getTransaction().commit();
         em.close();
+        factory.close();
     }
     
     /**
@@ -69,6 +71,7 @@ public class PacienteDAO implements Dao{
         EntityManager em = factory.createEntityManager();
         List<Paciente> listaPaciente = em.createQuery("SELECT pac FROM Paciente pac").getResultList();       
         em.close();
+        factory.close();
         return (listaPaciente);
     }
     /**
@@ -83,6 +86,7 @@ public class PacienteDAO implements Dao{
         EntityManager em = factory.createEntityManager();
         Paciente paciente = em.find(Paciente.class, id);
         em.close();
+        factory.close();
         return (paciente);
     }
      

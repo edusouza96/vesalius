@@ -91,4 +91,16 @@ public class ProcedimentoWS {
         ProcedimentoDAO dao =  new ProcedimentoDAO();
         dao.deletar(procedimento);
     }
+    
+    @GET
+    @Produces("application/json")
+    @Path("busca/{id}")
+    public String busca(@PathParam("id") int id){
+        Procedimento procedimento = new Procedimento();
+        procedimento.setIdProcedimento(id);
+        ProcedimentoDAO dao = new ProcedimentoDAO();
+        procedimento = dao.procurarPorId(id);
+        Gson g = new Gson();
+        return g.toJson(procedimento);
+    }
 }
