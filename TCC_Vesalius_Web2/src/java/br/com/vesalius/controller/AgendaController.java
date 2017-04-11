@@ -6,11 +6,14 @@
 package br.com.vesalius.controller;
 
 import br.com.vesalius.dao.HttpAgendaDAO;
+import br.com.vesalius.dao.HttpNotificacaoDAO;
 import br.com.vesalius.dao.HttpPacienteDAO;
 import br.com.vesalius.dao.HttpProcedimentoDAO;
 import br.com.vesalius.dominio.Agenda;
+import br.com.vesalius.dominio.Notificacao;
 import br.com.vesalius.dominio.Paciente;
 import br.com.vesalius.dominio.Procedimento;
+import br.com.vesalius.dominio.PushNotification;
 import br.com.vesalius.util.Util;
 import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -35,6 +38,7 @@ public class AgendaController {
     @RequestMapping("/agenda/")
     public String listar(Model model, Agenda agenda){
         try {
+            Notificacao[] notificacao = null;
             if(agenda.getNomePaciente() != null){
                 Paciente[] listaPaciente = new HttpPacienteDAO().listar();
                 String nomePacienteIso = agenda.getNomePaciente();
@@ -67,37 +71,48 @@ public class AgendaController {
                 model.addAttribute("ok","Registro Salvo!");
             }
             Agenda[] lista = new HttpAgendaDAO().listar();
-                StringBuilder listaJson = new StringBuilder("");
-                for (Agenda ag : lista) {
-                    listaJson.append("{");
-                    listaJson.append("id: '").append(ag.getIdAgenda()).append("' ");
-                    listaJson.append(",");
-                    listaJson.append("title: '").append(ag.getPaciente().getNomePaciente()).append("' ");
-                    listaJson.append(",");
-                    listaJson.append("start: '").append(new Util().showDateHourUs(ag.getDataAgenda())).append("' ");
-                    String dtUs = new Util().showDateUs(ag.getDataAgenda())+" "+ag.getHoraAgenda();
-                    listaJson.append(",");
-                    listaJson.append("end: '").append(dtUs).append("' ");
-//                    listaJson.append(",");
-//                    listaJson.append("url: '").append("alert();").append("' ");
-                    listaJson.append("},");
-                }
+            StringBuilder listaJson = new StringBuilder("");
+            for (Agenda ag : lista) {
+                listaJson.append("{");
+                listaJson.append("id: '").append(ag.getIdAgenda()).append("' ");
+                listaJson.append(",");
+                listaJson.append("title: '").append(ag.getPaciente().getNomePaciente()).append("' ");
+                listaJson.append(",");
+                listaJson.append("start: '").append(new Util().showDateHourUs(ag.getDataAgenda())).append("' ");
+                String dtUs = new Util().showDateUs(ag.getDataAgenda())+" "+ag.getHoraAgenda();
+                listaJson.append(",");
+                listaJson.append("end: '").append(dtUs).append("' ");
+                listaJson.append("},");
 
-                model.addAttribute("lista",listaJson);
-                model.addAttribute("dataAtual", new Util().showDateUs(new Date(System.currentTimeMillis())));
-                Procedimento[] listaProcedimento = new HttpProcedimentoDAO().listar();
-                model.addAttribute("listaProcedimento", listaProcedimento);
-                Paciente[] listaPaciente = new HttpPacienteDAO().listar();
-                StringBuilder nomePacientes = new StringBuilder("[");
-                for (Paciente paciente : listaPaciente) {
-                    nomePacientes.append("'");
-                    nomePacientes.append(paciente.getNomePaciente());
-                    nomePacientes.append("'");
-                    nomePacientes.append(",");
+                //Verificar consultas do dia
+                Date dataHoje = new Date(System.currentTimeMillis());
+                if(new Util().showDate(dataHoje).equals(new Util().showDate(ag.getDataAgenda()))){
+                    notificacao = new HttpNotificacaoDAO().buscar(ag.getPaciente());
                 }
-                nomePacientes.append("]");
-                model.addAttribute("nomePacientes", nomePacientes);
-                System.out.println(listaJson);
+            }
+            //Mandar notificações
+            Calendar calendar = Calendar.getInstance();
+            if(calendar.get(Calendar.HOUR_OF_DAY) > 17 && calendar.get(Calendar.HOUR_OF_DAY) < 18){
+                for(Notificacao notif : notificacao){
+                    PushNotification pn = new PushNotification(notif.getTokenNotificacao());
+                    new HttpNotificacaoDAO().pushNotification(pn);
+                }
+            }
+            model.addAttribute("lista",listaJson);
+            model.addAttribute("dataAtual", new Util().showDateUs(new Date(System.currentTimeMillis())));
+            Procedimento[] listaProcedimento = new HttpProcedimentoDAO().listar();
+            model.addAttribute("listaProcedimento", listaProcedimento);
+            Paciente[] listaPaciente = new HttpPacienteDAO().listar();
+            StringBuilder nomePacientes = new StringBuilder("[");
+            for (Paciente paciente : listaPaciente) {
+                nomePacientes.append("'");
+                nomePacientes.append(paciente.getNomePaciente());
+                nomePacientes.append("'");
+                nomePacientes.append(",");
+            }
+            nomePacientes.append("]");
+            model.addAttribute("nomePacientes", nomePacientes);
+            System.out.println(listaJson);
 
         }catch (NullPointerException ex){
             System.err.println(agenda.getNomePaciente()+ex);
@@ -119,6 +134,12 @@ public class AgendaController {
         }
         
         return "redirect";
+    }
+    
+    @RequestMapping(value="/agenda/teste/{id}", method = RequestMethod.GET)
+    public String teste (@PathVariable("id") String id, Model model){
+    
+        return "agenda/index";
     }
    
 }
