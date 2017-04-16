@@ -34,6 +34,7 @@ and open the template in the editor.
 .menuPacienteSpan{
     margin-left: 30px;
     font-size: 17px;
+    cursor: pointer;
 }
 
 .menuPaciente :hover{
@@ -49,4 +50,8 @@ and open the template in the editor.
     border-radius: 10px;
     width: 18%;
     text-align: center;
+}
+
+#btnDetalhe{
+    width:40%;
 }

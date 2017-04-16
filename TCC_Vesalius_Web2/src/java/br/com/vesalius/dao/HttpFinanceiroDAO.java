@@ -8,65 +8,77 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import br.com.vesalius.dominio.Prontuario;
+import br.com.vesalius.dominio.Financeiro;
 import br.com.vesalius.util.Util;
 import java.util.Date;
 
 
-public class HttpProntuarioDAO {
+public class HttpFinanceiroDAO{
 
    private final String USER_AGENT = "Mozila/5.0";
    
-   public static void remover(Prontuario prontuario) throws Exception{
-        HttpProntuarioDAO http = new HttpProntuarioDAO();
+   public static void remover(Financeiro financeiro) throws Exception{
+        HttpFinanceiroDAO http = new HttpFinanceiroDAO();
         Gson gson = new Gson();
-        Type prontuarioType = new TypeToken<Prontuario>(){}.getType();
-        String json = gson.toJson(prontuario,prontuarioType);
-        String url = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/excluir";
+        Type financeiroType = new TypeToken<Financeiro>(){}.getType();
+        String json = gson.toJson(financeiro,financeiroType);
+        String url = "http://localhost:8080/TCC_Vesalius/webresources/financeiro/excluir";
         http.sendPost(url, json, "PUT");
     }
    
-    
-   public static void salvar(Prontuario prontuario) throws Exception{
-        HttpProntuarioDAO http = new HttpProntuarioDAO();
+    public static void salvar(Financeiro financeiro) throws Exception{
+        HttpFinanceiroDAO http = new HttpFinanceiroDAO();
         Gson gson = new Gson();
-        Type prontuarioType = new TypeToken<Prontuario>(){}.getType();
-        String json = gson.toJson(prontuario,prontuarioType);
+        Type financeiroType = new TypeToken<Financeiro>(){}.getType();
+        String json = gson.toJson(financeiro,financeiroType);
         json = (new String(json.getBytes("UTF-8"), "ISO-8859-1"));
-        if(prontuario.getIdProntuario()>0){
-            String url = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/alterar";
+        if(financeiro.getIdFinanceiro()>0){
+            String url = "http://localhost:8080/TCC_Vesalius/webresources/financeiro/alterar";
             http.sendPost(url, json, "PUT");
         }else{
-            String url = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/inserir";
+            String url = "http://localhost:8080/TCC_Vesalius/webresources/financeiro/inserir";
             http.sendPost(url, json, "POST");
         }
     }
     
-    public static Prontuario[] listar() throws Exception{
-        HttpProntuarioDAO http = new HttpProntuarioDAO();
+    public static Financeiro[] listar() throws Exception{
+        HttpFinanceiroDAO http = new HttpFinanceiroDAO();
         Gson gson = new Gson();
-        Type prontuarioType = new TypeToken<Prontuario>(){}.getType();
+        Type financeiroType = new TypeToken<Financeiro>(){}.getType();
         
-        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/listar";
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/financeiro/listar";
         String json = http.sendGet(chamadaWS, "GET");
-        Prontuario[] prontuario = gson.fromJson(json, Prontuario[].class);
-        for (Prontuario pront : prontuario) {
-            Date data = pront.getDataProntuario();
-            pront.setDataProntuarioStr(new Util().showDate(data));
-            
-        }
-        return prontuario;
+        Financeiro[] financeiro = gson.fromJson(json, Financeiro[].class);
+        return financeiro;
     }
     
-    public static Prontuario buscar(Prontuario prontuarioParametro) throws Exception{
-        HttpProntuarioDAO http = new HttpProntuarioDAO();
+    public static Financeiro[] listaFiltrada() throws Exception{
+        HttpFinanceiroDAO http = new HttpFinanceiroDAO();
         Gson gson = new Gson();
-        Type prontuarioType = new TypeToken<Prontuario>(){}.getType();
-               
-        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/prontuario/busca/"+prontuarioParametro.getIdProntuario();
+        Type financeiroType = new TypeToken<Financeiro>(){}.getType();
+        
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/financeiro/listaFiltrada";
         String json = http.sendGet(chamadaWS, "GET");
-        Prontuario prontuario = gson.fromJson(json, Prontuario.class);
-        return prontuario;
+        Financeiro[] financeiro = gson.fromJson(json, Financeiro[].class);
+        for (Financeiro fin : financeiro) {
+            Date data = fin.getVencimentoFinanceiro();
+            fin.setVencimentoFinanceiroStr(new Util().showDate(data));
+            
+        }
+        return financeiro;
+    }
+    
+    public static Financeiro buscar(Financeiro financeiroParametro) throws Exception{
+        HttpFinanceiroDAO http = new HttpFinanceiroDAO();
+        Gson gson = new Gson();
+        Type financeiroType = new TypeToken<Financeiro>(){}.getType();
+               
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/financeiro/busca/"+financeiroParametro.getIdFinanceiro();
+        String json = http.sendGet(chamadaWS, "GET");
+        Financeiro financeiro = gson.fromJson(json, Financeiro.class);
+        Date data = financeiro.getVencimentoFinanceiro();
+        financeiro.setVencimentoFinanceiroStr(new Util().showDate(data));
+        return financeiro;
     }
     
     private String sendGet(String url, String method) throws Exception{

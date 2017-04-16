@@ -1,7 +1,6 @@
 package br.com.vesalius.dao;
 
-import br.com.vesalius.dominio.Agenda;
-import br.com.vesalius.dominio.Financeiro;
+import br.com.vesalius.dominio.Forma_Pagamento;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -12,44 +11,32 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class HttpAgendaDAO {
+public class HttpFormaPagamentoDAO {
 
    private final String USER_AGENT = "Mozila/5.0";
-    public static void salvar(Agenda agenda) throws Exception{
-        HttpAgendaDAO http = new HttpAgendaDAO();
+   
+  
+    public static Forma_Pagamento buscar(int id) throws Exception{
+        HttpFormaPagamentoDAO http = new HttpFormaPagamentoDAO();
         Gson gson = new Gson();
-        Type agendaType = new TypeToken<Agenda>(){}.getType();
-        String json = gson.toJson(agenda,agendaType);
-        json = (new String(json.getBytes("UTF-8"), "ISO-8859-1"));        
-        if(agenda.getIdAgenda()>0){
-            String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/alterar";
-            http.sendPost(url, json, "PUT");
-        }else{
-            String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/inserir";
-            http.sendPost(url, json, "POST");
-        }
-    }
-    
-    public static Agenda[] listar() throws Exception{
-        HttpAgendaDAO http = new HttpAgendaDAO();
-        Gson gson = new Gson();
-        Type agendaType = new TypeToken<Agenda>(){}.getType();
-        
-        
-        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/agenda/listar";
+        Type tAcessosType = new TypeToken<Forma_Pagamento>(){}.getType();
+               
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/formaPagamento/busca/"+id;
         String json = http.sendGet(chamadaWS, "GET");
-        Agenda[] agenda = gson.fromJson(json, Agenda[].class);
-        return agenda;
+        Forma_Pagamento tAcessos = gson.fromJson(json, Forma_Pagamento.class);
+        return tAcessos;
     }
     
-    public static void remover(Agenda agenda) throws Exception{
-        HttpAgendaDAO http = new HttpAgendaDAO();
+    public static Forma_Pagamento[] listar() throws Exception{
+        HttpFormaPagamentoDAO http = new HttpFormaPagamentoDAO();
         Gson gson = new Gson();
-        Type agendaType = new TypeToken<Agenda>(){}.getType();
-        String json = gson.toJson(agenda,agendaType);
-        String url = "http://localhost:8080/TCC_Vesalius/webresources/agenda/excluir";
-        http.sendPost(url, json, "PUT");
+        Type fPagamentoType = new TypeToken<Forma_Pagamento>(){}.getType();
         
+        
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/formaPagamento/listar";
+        String json = http.sendGet(chamadaWS, "GET");
+        Forma_Pagamento[] fPagamento = gson.fromJson(json, Forma_Pagamento[].class);
+        return fPagamento;
     }
     
     private String sendGet(String url, String method) throws Exception{
@@ -72,8 +59,6 @@ public class HttpAgendaDAO {
         }
         in.close();
         return (new String(response.toString().getBytes("ISO-8859-1"), "UTF-8"));
-        
-        
     }
     
     private void sendPost(String url, String urlParameters, String method) throws Exception{

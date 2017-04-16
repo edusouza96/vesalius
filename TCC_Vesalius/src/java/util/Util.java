@@ -1,8 +1,7 @@
 /*
  * Classe com metodos uteis
  */
-package br.com.vesalius.util;
-
+package util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -180,11 +179,4 @@ public class Util {
             return new SimpleDateFormat("yyyy-MM-01").format(data);
         }
     }
-//        Gravar em arquivo
-//        FileWriter arq = new FileWriter("C:\\Users\\Eduardo\\Desktop\\tst\\teste.txt");
-//        PrintWriter gravarArq = new PrintWriter(arq);
-//
-//        gravarArq.printf(paciente.getNomePaciente());
-//
-//        arq.close();
 }

@@ -20,8 +20,14 @@
     <script type="text/javascript" src="<c:url value="../resources/fullcalendar-3.2.0/locale-all.js"/>"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link href="<c:url value="../resources/css/style.css"/>" rel="stylesheet" type="text/css"/>    
 
     <script>
+      window.onload = function(){
+        var ok = sessionStorage.getItem('confirmation_ok');
+        document.getElementById('ok').innerHTML = ok;
+        sessionStorage.removeItem('confirmation_ok');
+      };
       function autoCompletePaciente() {
         $("#nomePaciente").autocomplete({
             source: ${nomePacientes}

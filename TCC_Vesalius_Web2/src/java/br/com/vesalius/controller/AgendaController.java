@@ -6,10 +6,12 @@
 package br.com.vesalius.controller;
 
 import br.com.vesalius.dao.HttpAgendaDAO;
+import br.com.vesalius.dao.HttpFinanceiroDAO;
 import br.com.vesalius.dao.HttpNotificacaoDAO;
 import br.com.vesalius.dao.HttpPacienteDAO;
 import br.com.vesalius.dao.HttpProcedimentoDAO;
 import br.com.vesalius.dominio.Agenda;
+import br.com.vesalius.dominio.Financeiro;
 import br.com.vesalius.dominio.Notificacao;
 import br.com.vesalius.dominio.Paciente;
 import br.com.vesalius.dominio.Procedimento;
@@ -34,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class AgendaController {   
-   
+
     @RequestMapping("/agenda/")
     public String listar(Model model, Agenda agenda){
         try {
@@ -67,8 +69,13 @@ public class AgendaController {
                 }
                 
                 new HttpAgendaDAO().salvar(agenda);
-
+                if(agenda.getIdAgenda() == 0){
+                    registroFinanceiro(agenda);
+                }
+                
                 model.addAttribute("ok","Registro Salvo!");
+                model.addAttribute("redirect", "");
+                return "redirect";
             }
             Agenda[] lista = new HttpAgendaDAO().listar();
             StringBuilder listaJson = new StringBuilder("");
@@ -142,4 +149,23 @@ public class AgendaController {
         return "agenda/index";
     }
    
+    private void registroFinanceiro(Agenda agenda){
+        try {
+            Procedimento procedimento = new Procedimento();
+            procedimento.setIdProcedimento(agenda.getServico());
+            Procedimento objProcedimento = new HttpProcedimentoDAO().buscar(procedimento);
+            
+            
+            Financeiro financeiro = new Financeiro();
+            financeiro.setPaciente(agenda.getPaciente());
+            financeiro.setTipoFinanceiro(true);
+            financeiro.setTituloFinanceiro("Paciente");
+            financeiro.setVencimentoFinanceiro(agenda.getDataAgenda());
+            financeiro.setDescricaoFinanceiro(objProcedimento.getNomeProcedimento()+".........................................R$ "+objProcedimento.getValorProcedimento());
+            financeiro.setValorFinanceiro(objProcedimento.getValorProcedimento());
+            new HttpFinanceiroDAO().salvar(financeiro);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
 }

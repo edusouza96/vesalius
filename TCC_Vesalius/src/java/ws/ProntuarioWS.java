@@ -41,7 +41,8 @@ public class ProntuarioWS {
     public String getJson() {
         return "Meu primeiro WebService RestFull";
     }
-   @GET
+    
+    @GET
     @Produces("application/json")
     @Path("listar")
     public String lista() {

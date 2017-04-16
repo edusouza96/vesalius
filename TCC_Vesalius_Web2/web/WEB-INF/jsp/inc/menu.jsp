@@ -79,6 +79,7 @@
           <li><a class="active" href="../agenda/">Agenda</a></li>
           <li><a href="../paciente/lista">Pacientes</a></li>
           <li><a href="../procedimento/lista">Procedimentos</a></li>
+          <li><a href="../financeiro/lista">Financeiro</a></li>
           <li class="icon">
             <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
           </li>
