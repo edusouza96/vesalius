@@ -12,6 +12,7 @@
             window.onload = function(){
                 sessionStorage.setItem('confirmation_ok', '${ok}');
             }
+            
         </script>
         <meta http-equiv="REFRESH" content="0;url=${redirect}"/>
     </head>

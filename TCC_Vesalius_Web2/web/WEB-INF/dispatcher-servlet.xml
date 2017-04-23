@@ -22,5 +22,8 @@
           p:suffix=".jsp" />
     
     <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:interceptors>
+        <bean class="br.com.vesalius.interceptor.AutorizadorInterceptor" />
+    </mvc:interceptors>
 
 </beans>

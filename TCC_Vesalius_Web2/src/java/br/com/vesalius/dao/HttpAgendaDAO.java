@@ -2,6 +2,7 @@ package br.com.vesalius.dao;
 
 import br.com.vesalius.dominio.Agenda;
 import br.com.vesalius.dominio.Financeiro;
+import br.com.vesalius.dominio.Paciente;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
@@ -37,6 +38,18 @@ public class HttpAgendaDAO {
         
         
         String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/agenda/listar";
+        String json = http.sendGet(chamadaWS, "GET");
+        Agenda[] agenda = gson.fromJson(json, Agenda[].class);
+        return agenda;
+    }
+    
+    public static Agenda[] consultasPorPaciente(Paciente paciente) throws Exception{
+        HttpAgendaDAO http = new HttpAgendaDAO();
+        Gson gson = new Gson();
+        Type agendaType = new TypeToken<Agenda>(){}.getType();
+        
+        
+        String chamadaWS = "http://localhost:8080/TCC_Vesalius/webresources/agenda/consultasPorPaciente/"+paciente.getIdPaciente();
         String json = http.sendGet(chamadaWS, "GET");
         Agenda[] agenda = gson.fromJson(json, Agenda[].class);
         return agenda;

@@ -21,7 +21,10 @@
                   overflow: hidden;
                   background-color: #007fbf;
                 }
-
+                
+                #btnSair{
+                    float: right;
+                }
                 ul.topnav li {float: left;}
 
                 ul.topnav li a {
@@ -64,6 +67,38 @@
                 }
             </style>
             <script>
+                window.onload = function(){
+                    var permissao = '<%=request.getSession().getAttribute("permissao")%>';
+                    if(permissao == 3){
+                        document.getElementById('menuAgenda').style.display = 'block';
+                        document.getElementById('menuPacienteView').style.display = 'block';
+                        document.getElementById('menuPaciente').style.display = 'none';
+                        document.getElementById('menuProcedimento').style.display = 'none';
+                        document.getElementById('menuFinanceiro').style.display = 'none';
+                        document.getElementById('menuNotificacao').style.display = 'none';
+                    }else if(permissao == 2){
+                        document.getElementById('menuAgenda').style.display = 'block';
+                        document.getElementById('menuPacienteView').style.display = 'none';
+                        document.getElementById('menuPaciente').style.display = 'block';
+                        document.getElementById('menuProcedimento').style.display = 'none';
+                        document.getElementById('menuFinanceiro').style.display = 'block';
+                        document.getElementById('menuNotificacao').style.display = 'block';
+                    }else if(permissao == 1){
+                        document.getElementById('menuAgenda').style.display = 'block';
+                        document.getElementById('menuPacienteView').style.display = 'none';
+                        document.getElementById('menuPaciente').style.display = 'block';
+                        document.getElementById('menuProcedimento').style.display = 'block';
+                        document.getElementById('menuFinanceiro').style.display = 'block';
+                        document.getElementById('menuNotificacao').style.display = 'block';
+                    }else{
+                        document.getElementById('menuAgenda').style.display = 'none';
+                        document.getElementById('menuPacienteView').style.display = 'none';
+                        document.getElementById('menuPaciente').style.display = 'none';
+                        document.getElementById('menuProcedimento').style.display = 'none';
+                        document.getElementById('menuFinanceiro').style.display = 'none';
+                        document.getElementById('menuNotificacao').style.display = 'none';
+                    }
+                };
                 function myFunction() {
                     var x = document.getElementById("myTopnav");
                     if (x.className === "topnav") {
@@ -76,10 +111,13 @@
     </head>
     <body>
         <ul class="topnav" id="myTopnav">
-          <li><a class="active" href="../agenda/">Agenda</a></li>
-          <li><a href="../paciente/lista">Pacientes</a></li>
-          <li><a href="../procedimento/lista">Procedimentos</a></li>
-          <li><a href="../financeiro/lista">Financeiro</a></li>
+          <li id="menuAgenda"><a class="active" href="../agenda/">Agenda</a></li>
+          <li id="menuPaciente"><a href="../paciente/lista">Pacientes</a></li>
+          <li id="menuPacienteView"><a href="../paciente/visualizar">Meus Dados</a></li>
+          <li id="menuProcedimento"><a href="../procedimento/lista">Procedimentos</a></li>
+          <li id="menuFinanceiro"><a href="../financeiro/lista">Financeiro</a></li>
+          <li id="menuNotificacao"><a href="../agenda/notification"><span class="glyphicon glyphicon-bullhorn"></span></a></li>
+          <li id="btnSair"><a href="../logout/"><span class="glyphicon glyphicon-off"></span></a></li>
           <li class="icon">
             <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
           </li>

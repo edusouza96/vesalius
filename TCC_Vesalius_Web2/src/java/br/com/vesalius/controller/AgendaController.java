@@ -12,6 +12,7 @@ import br.com.vesalius.dao.HttpPacienteDAO;
 import br.com.vesalius.dao.HttpProcedimentoDAO;
 import br.com.vesalius.dominio.Agenda;
 import br.com.vesalius.dominio.Financeiro;
+import br.com.vesalius.dominio.Login;
 import br.com.vesalius.dominio.Notificacao;
 import br.com.vesalius.dominio.Paciente;
 import br.com.vesalius.dominio.Procedimento;
@@ -22,6 +23,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,6 +84,8 @@ public class AgendaController {
             for (Agenda ag : lista) {
                 listaJson.append("{");
                 listaJson.append("id: '").append(ag.getIdAgenda()).append("' ");
+                listaJson.append(",");
+                listaJson.append("procedimento: '").append(ag.getServico()).append("' ");
                 listaJson.append(",");
                 listaJson.append("title: '").append(ag.getPaciente().getNomePaciente()).append("' ");
                 listaJson.append(",");
@@ -149,6 +153,102 @@ public class AgendaController {
         return "agenda/index";
     }
    
+    @RequestMapping("/agenda/notification")
+    public String enviarNotification(Model model){
+        try{
+            Notificacao[] notificacao = null;
+            Agenda[] listaAgencia = new HttpAgendaDAO().listar();
+            Date dataHoje = new Date(System.currentTimeMillis());
+            for(Agenda ag: listaAgencia){
+                if(new Util().showDate(dataHoje).equals(new Util().showDate(ag.getDataAgenda()))){
+                    notificacao = new HttpNotificacaoDAO().buscar(ag.getPaciente());
+                }
+            }
+            
+            for(Notificacao notif : notificacao){
+                PushNotification pn = new PushNotification(notif.getTokenNotificacao());
+                new HttpNotificacaoDAO().pushNotification(pn);
+            }
+            model.addAttribute("ok","Lembretes enviadas!");
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        model.addAttribute("redirect", "../agenda/");
+        return "redirect";
+    }
+    
+    @RequestMapping("/agenda/consultas")
+    public String consultasPorPaciente(Model model, Agenda agenda, HttpServletRequest request){
+        try {
+            if(agenda.getNomePaciente() != null){
+                Paciente[] listaPaciente = new HttpPacienteDAO().listar();
+                String nomePacienteIso = agenda.getNomePaciente();
+                byte ptext[] = nomePacienteIso.getBytes(ISO_8859_1); 
+                String nomePacienteUTF = new String(ptext, UTF_8); 
+                for (Paciente paciente : listaPaciente) {
+                    if(paciente.getNomePaciente().equals(nomePacienteUTF)){
+                        agenda.setPaciente(paciente);                
+                    }
+                }
+                String dataHora = new Util().dateUs2Br(agenda.getDataConsultaAgenda(), agenda.getHoraAgenda());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                Date date = sdf.parse(dataHora);
+                agenda.setDataAgenda(date);
+                System.out.println(agenda.getHoraFimAgenda().equals(""));
+                if(agenda.getHoraFimAgenda().equals("")){
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
+                    Calendar t = (Calendar) calendar.clone();
+                    t.set(Calendar.AM_PM, Calendar.PM);
+                    t.setTime(date);
+                    t.add(Calendar.MINUTE, 30); 
+                    agenda.setHoraAgenda(new SimpleDateFormat("HH:mm").format(t.getTime()));
+                }else{
+                    agenda.setHoraAgenda(agenda.getHoraFimAgenda());
+                }
+                
+                new HttpAgendaDAO().salvar(agenda);
+                if(agenda.getIdAgenda() == 0){
+                    registroFinanceiro(agenda);
+                }
+                
+                model.addAttribute("ok","Sua solicitação foi enviada. Aguarde a confirmação!");
+                model.addAttribute("redirect", "../agenda/consultas");
+                return "redirect";
+            }
+            Login login = (Login) request.getSession().getAttribute("user");
+            Agenda[] lista = new HttpAgendaDAO().consultasPorPaciente(login.getPaciente());
+            StringBuilder listaJson = new StringBuilder("");
+            for (Agenda ag : lista) {
+                listaJson.append("{");
+                listaJson.append("id: '").append(ag.getIdAgenda()).append("' ");
+                listaJson.append(",");
+                listaJson.append("procedimento: '").append(ag.getServico()).append("' ");
+                listaJson.append(",");
+                listaJson.append("title: '").append(ag.getPaciente().getNomePaciente()).append("' ");
+                listaJson.append(",");
+                listaJson.append("start: '").append(new Util().showDateHourUs(ag.getDataAgenda())).append("' ");
+                String dtUs = new Util().showDateUs(ag.getDataAgenda())+" "+ag.getHoraAgenda();
+                listaJson.append(",");
+                listaJson.append("end: '").append(dtUs).append("' ");
+                listaJson.append("},");
+
+            }
+            
+            model.addAttribute("lista",listaJson);
+            model.addAttribute("dataAtual", new Util().showDateUs(new Date(System.currentTimeMillis())));
+            Procedimento[] listaProcedimento = new HttpProcedimentoDAO().listar();
+            model.addAttribute("listaProcedimento", listaProcedimento);
+            model.addAttribute("nomePaciente", login.getPaciente().getNomePaciente());
+            
+
+        }catch (NullPointerException ex){
+            System.err.println(agenda.getNomePaciente()+ex);
+        }catch (Exception ex) {
+            System.err.println(ex);
+        }
+        return "agenda/indexPaciente";
+    }
     private void registroFinanceiro(Agenda agenda){
         try {
             Procedimento procedimento = new Procedimento();

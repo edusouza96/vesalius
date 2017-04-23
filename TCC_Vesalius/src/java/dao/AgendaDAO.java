@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import model.Agenda;
 
@@ -88,6 +89,17 @@ public class AgendaDAO implements Dao{
         em.close();
         factory.close();
         return (agenda);
+    }
+
+    public List<Agenda> consultasPorPaciente(int id) {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("vesaliusPU"); 
+        EntityManager em = factory.createEntityManager();
+        Query query = em.createQuery("SELECT age FROM Agenda age WHERE age.paciente.idPaciente = :idPaciente");
+        query.setParameter("idPaciente",id);
+        List<Agenda> listaAgenda = query.getResultList();
+        em.close();
+        factory.close();
+        return (listaAgenda);
     }
      
 

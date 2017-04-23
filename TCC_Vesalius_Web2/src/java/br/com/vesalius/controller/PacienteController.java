@@ -6,8 +6,10 @@
 package br.com.vesalius.controller;
 
 import br.com.vesalius.dao.HttpPacienteDAO;
+import br.com.vesalius.dominio.Login;
 import br.com.vesalius.util.*;
 import br.com.vesalius.dominio.Paciente;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,8 @@ public class PacienteController {
 
                 String tratamento = paciente.getInicioTratamentoPaciente();
                 paciente.setInicioTratamentoPaciente(new Util().dateUs2Br(tratamento));
+                
+                paciente.setTipoAcessos(3);
                
                 new HttpPacienteDAO().salvar(paciente);
                 
@@ -62,6 +66,18 @@ public class PacienteController {
         }
         
         return "paciente/cadastro";
+    }
+    
+    @RequestMapping(value="/paciente/visualizar")
+    public String visualizar (Model model, HttpServletRequest request){
+        try {
+            Login login = (Login) request.getSession().getAttribute("user");
+            model.addAttribute("paciente", login.getPaciente());
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
+        return "paciente/visualizar";
     }
  
     @RequestMapping("/paciente/lista")

@@ -91,4 +91,16 @@ public class AgendaWS {
         AgendaDAO dao =  new AgendaDAO();
         dao.deletar(agenda);
     }
+    
+    @GET
+    @Produces("application/json")
+    @Path("consultasPorPaciente/{id}")
+    public String busca(@PathParam("id") int id){
+        List<Agenda> lista;
+        AgendaDAO dao = new AgendaDAO();
+        lista = dao.consultasPorPaciente(id);
+       
+        Gson g = new Gson();
+        return g.toJson(lista);
+    }
 }
