@@ -29,49 +29,52 @@
     <link href="<c:url value="../resources/css/style.css"/>" rel="stylesheet" type="text/css"/>    
 
     <script>
-      window.onload = function(){
-        var ok = sessionStorage.getItem('confirmation_ok');
-        document.getElementById('ok').innerHTML = ok;
-        sessionStorage.removeItem('confirmation_ok');
-      };
-      function autoCompletePaciente() {
-        $("#nomePaciente").autocomplete({
-            source: ${nomePacientes}
-        });
-      }
+        $(document).ready(function() {
+            var ok = sessionStorage.getItem('confirmation_ok');
+            document.getElementById('ok').innerHTML = ok;
+            sessionStorage.removeItem('confirmation_ok');
 
-      function excluirConsulta(){
-        if(confirm("Deseja Realmente Excluir Esta Consulta?")){
-            var id = $("#idAgenda").val();
-            var oReq = new XMLHttpRequest();
-            oReq.onload = function(){
-                alert("Consulta Excluida!");
-                location.reload();
-            };
-            oReq.open("get", "deletar-"+id, true);
-            oReq.send();
-        }
-      }
-    </script>
-    <script>
+            $('#calendar').fullCalendar({
+                    header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay,listWeek'
+                    },
+                    defaultDate: '${dataAtual}',
+                    locale: 'pt-br',
+                    navLinks: true, // can click day/week names to navigate views
 
-            $(document).ready(function() {
+                    selectable: true,
+                    selectHelper: true,
+                    select: function (start,end){
+                        $( "#dialog" ).dialog({
+                            autoOpen: false,
+                            show: {
+                              effect: "clip",
+                              duration: 500
+                            },
+                            hide: {
+                              effect: "clip",
+                              duration: 500
+                            }
+                        });
 
-                $('#calendar').fullCalendar({
-                        header: {
-                                left: 'prev,next today',
-                                center: 'title',
-                                right: 'month,agendaWeek,agendaDay,listWeek'
-                        },
-                        defaultDate: '${dataAtual}',
-                        locale: 'pt-br',
-                        navLinks: true, // can click day/week names to navigate views
-
-                        selectable: true,
-                        selectHelper: true,
-                        select: function (start,end){
+                        $( "#dialog" ).dialog( "open" );
+                        var dateString = start.toISOString();
+                        var dateFimString = end.toISOString();
+                        $("#dataAgenda").val(dateString.substring(0,10));
+                        $("#horaAgenda").val(dateString.substring(11,16));
+                        $("#horaFimAgenda").val(dateFimString.substring(11,16));
+                    },
+                    editable: true,
+                    eventLimit: true, // allow "more" link when too many events
+                    events: [
+                        ${lista}
+                    ],
+                    eventClick: function(event) {
+                        if (event.title) {
                             $( "#dialog" ).dialog({
-                                autoOpen: false,
+                                autoOpen: true,
                                 show: {
                                   effect: "clip",
                                   duration: 500
@@ -82,45 +85,36 @@
                                 }
                             });
 
-                            $( "#dialog" ).dialog( "open" );
-                            var dateString = start.toISOString();
-                            var dateFimString = end.toISOString();
+                            $("#idAgenda").val(parseInt(event.id));
+                            $("#nomePaciente").val(event.title);
+                            var dateString = event.start.toISOString();
                             $("#dataAgenda").val(dateString.substring(0,10));
                             $("#horaAgenda").val(dateString.substring(11,16));
-                            $("#horaFimAgenda").val(dateFimString.substring(11,16));
-                        },
-                        editable: true,
-                        eventLimit: true, // allow "more" link when too many events
-                        events: [
-                            ${lista}
-                        ],
-                        eventClick: function(event) {
-                            if (event.title) {
-                                $( "#dialog" ).dialog({
-                                    autoOpen: true,
-                                    show: {
-                                      effect: "clip",
-                                      duration: 500
-                                    },
-                                    hide: {
-                                      effect: "clip",
-                                      duration: 500
-                                    }
-                                });
-
-                                $("#idAgenda").val(parseInt(event.id));
-                                $("#nomePaciente").val(event.title);
-                                var dateString = event.start.toISOString();
-                                $("#dataAgenda").val(dateString.substring(0,10));
-                                $("#horaAgenda").val(dateString.substring(11,16));
-                                $("#servico").val(event.procedimento);                            
-                                return false;
-                            }
+                            $("#servico").val(event.procedimento);
+                            return false;
                         }
-                });
-
+                    }
             });
-            
+
+        });
+        function autoCompletePaciente() {
+            $("#nomePaciente").autocomplete({
+                source: ${nomePacientes}
+            });
+        }
+
+        function excluirConsulta(){
+          if(confirm("Deseja Realmente Excluir Esta Consulta?")){
+              var id = $("#idAgenda").val();
+              var oReq = new XMLHttpRequest();
+              oReq.onload = function(){
+                  alert("Consulta Excluida!");
+                  location.reload();
+              };
+              oReq.open("get", "deletar-"+id, true);
+              oReq.send();
+          }
+        }
     </script>
     <style>
 
@@ -197,8 +191,8 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                         <div class="form-group">
-                            <input type="submit" value="Salvar" id="submit" class="btn btn-primary"/>
-                        
+                            <input type="submit" value="Confirmar" id="submit" class="btn btn-primary"/>
+
                             <input type="button" onClick="excluirConsulta()" value="Excluir" id="submit" class="btn btn-danger"/>
                         </div>
                     </div>

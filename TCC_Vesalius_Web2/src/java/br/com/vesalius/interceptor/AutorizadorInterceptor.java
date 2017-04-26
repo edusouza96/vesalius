@@ -24,7 +24,13 @@ public class AutorizadorInterceptor  extends HandlerInterceptorAdapter{
       if(request.getSession().getAttribute("user") != null) {
         int permissaoNivel = (Integer) request.getSession().getAttribute("permissao");
         if(permissaoNivel != 3) {
-            return true;
+            if(permissaoNivel == 2 && uri.contains("prontuario")){
+                caminho = "../paciente/lista";
+            }else if(permissaoNivel == 2 && (uri.contains("financeiro/detalhes-") || uri.contains("financeiro/pagar-"))){
+                caminho = "../financeiro/lista";
+            }else{
+                return true;
+            }
         }else{
             if(uri.endsWith("/paciente/visualizar") ||uri.contains("agenda") || uri.contains("logout")){
                 if(uri.endsWith("/agenda/")){

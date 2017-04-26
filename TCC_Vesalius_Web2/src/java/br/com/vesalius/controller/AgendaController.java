@@ -57,6 +57,7 @@ public class AgendaController {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 Date date = sdf.parse(dataHora);
                 agenda.setDataAgenda(date);
+                agenda.setStatusAgenda(1);
                 System.out.println(agenda.getHoraFimAgenda().equals(""));
                 if(agenda.getHoraFimAgenda().equals("")){
                     Calendar calendar = Calendar.getInstance();
@@ -71,6 +72,12 @@ public class AgendaController {
                 }
                 
                 new HttpAgendaDAO().salvar(agenda);
+                Notificacao[] notif = null;
+                notif = new HttpNotificacaoDAO().buscar(agenda.getPaciente());
+                for(Notificacao n : notif){
+                    PushNotification pn = new PushNotification(n.getTokenNotificacao(),"Consulta confirmada! Agendadado para "+dataHora);
+                    new HttpNotificacaoDAO().pushNotification(pn);
+                }
                 if(agenda.getIdAgenda() == 0){
                     registroFinanceiro(agenda);
                 }
@@ -87,6 +94,10 @@ public class AgendaController {
                 listaJson.append(",");
                 listaJson.append("procedimento: '").append(ag.getServico()).append("' ");
                 listaJson.append(",");
+                if(ag.getStatusAgenda() == 0){
+                    listaJson.append("color: '").append("#ff0000").append("' ");
+                    listaJson.append(",");
+                }
                 listaJson.append("title: '").append(ag.getPaciente().getNomePaciente()).append("' ");
                 listaJson.append(",");
                 listaJson.append("start: '").append(new Util().showDateHourUs(ag.getDataAgenda())).append("' ");
@@ -159,6 +170,10 @@ public class AgendaController {
             Notificacao[] notificacao = null;
             Agenda[] listaAgencia = new HttpAgendaDAO().listar();
             Date dataHoje = new Date(System.currentTimeMillis());
+            Calendar c = Calendar.getInstance();
+            c.setTime(dataHoje);
+            c.add(Calendar.DATE, +1);
+            dataHoje = c.getTime();
             for(Agenda ag: listaAgencia){
                 if(new Util().showDate(dataHoje).equals(new Util().showDate(ag.getDataAgenda()))){
                     notificacao = new HttpNotificacaoDAO().buscar(ag.getPaciente());
@@ -169,7 +184,7 @@ public class AgendaController {
                 PushNotification pn = new PushNotification(notif.getTokenNotificacao());
                 new HttpNotificacaoDAO().pushNotification(pn);
             }
-            model.addAttribute("ok","Lembretes enviadas!");
+            model.addAttribute("ok","Lembretes enviados!");
         }catch(Exception ex){
             System.out.println(ex);
         }
@@ -194,6 +209,7 @@ public class AgendaController {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 Date date = sdf.parse(dataHora);
                 agenda.setDataAgenda(date);
+                agenda.setStatusAgenda(0);
                 System.out.println(agenda.getHoraFimAgenda().equals(""));
                 if(agenda.getHoraFimAgenda().equals("")){
                     Calendar calendar = Calendar.getInstance();
@@ -225,6 +241,10 @@ public class AgendaController {
                 listaJson.append(",");
                 listaJson.append("procedimento: '").append(ag.getServico()).append("' ");
                 listaJson.append(",");
+                if(ag.getStatusAgenda() == 0){
+                    listaJson.append("color: '").append("#ff0000").append("' ");
+                    listaJson.append(",");
+                }
                 listaJson.append("title: '").append(ag.getPaciente().getNomePaciente()).append("' ");
                 listaJson.append(",");
                 listaJson.append("start: '").append(new Util().showDateHourUs(ag.getDataAgenda())).append("' ");

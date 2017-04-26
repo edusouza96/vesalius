@@ -15,6 +15,7 @@ public class Agenda {
     private String horaFimAgenda;
     private String horaAgenda;
     private int servico;
+    private int statusAgenda;
 
     /**
      * Construtor da classe com os parametros:
@@ -142,5 +143,21 @@ public class Agenda {
         this.horaFimAgenda = horaFimAgenda;
     }
     
+     /**
+     * getter de statusAgenda
+     * @return um int
+     */
+    public int getStatusAgenda() {
+        return statusAgenda;
+    }
+
+    /**
+     * setter de statusAgenda
+     * recebe por parametro um int 
+     * @param statusAgenda
+     */
+    public void setStatusAgenda(int statusAgenda) {
+        this.statusAgenda = statusAgenda;
+    }
     
 }

@@ -12,6 +12,9 @@ import br.com.vesalius.dominio.Forma_Pagamento;
 import br.com.vesalius.dominio.Paciente;
 import br.com.vesalius.util.Util;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -134,9 +137,21 @@ public class FinanceiroController {
     }
  
     @RequestMapping("/financeiro/lista")
-    public String listar(Model model){
+    public String listar(Model model, HttpServletRequest request){
         try {
-            model.addAttribute("lista",new HttpFinanceiroDAO().listaFiltrada());
+            Financeiro[] listaFin = new HttpFinanceiroDAO().listaFiltrada();
+            List<Financeiro> lista = new ArrayList<>();
+            int permissao = (Integer) request.getSession().getAttribute("permissao");
+            if(permissao == 2){
+                for(Financeiro fin: listaFin){
+                    if(fin.isTipoFinanceiro()){
+                        lista.add(fin);
+                    }
+                }
+                model.addAttribute("lista",lista);
+            }else{
+                model.addAttribute("lista",listaFin);
+            }
         } catch (Exception ex) {
             System.out.println(ex);
         }

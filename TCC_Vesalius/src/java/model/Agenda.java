@@ -22,6 +22,12 @@ public class Agenda {
     private Date dataAgenda;
     private String horaAgenda;
     private int servico;
+    private int statusAgenda;
+    /**
+     * status da agenda
+     * 1 - Confirmado
+     * 0 - Aguardando confirmação
+     */
 
     /**
      * Construtor da classe com os parametros:
@@ -128,4 +134,23 @@ public class Agenda {
     public void setServico(int servico) {
         this.servico = servico;
     }
+
+    /**
+     * getter de statusAgenda
+     * @return um int
+     */
+    public int getStatusAgenda() {
+        return statusAgenda;
+    }
+
+    /**
+     * setter de statusAgenda
+     * recebe por parametro um int 
+     * @param statusAgenda
+     */
+    public void setStatusAgenda(int statusAgenda) {
+        this.statusAgenda = statusAgenda;
+    }
+    
+    
 }

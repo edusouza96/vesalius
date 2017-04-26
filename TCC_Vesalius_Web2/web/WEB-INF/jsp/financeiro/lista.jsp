@@ -15,6 +15,7 @@
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
 
+        <script type="text/javascript" src="<c:url value="../resources/fullcalendar-3.2.0/lib/jquery.min.js"/>"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="<c:url value="../resources/bootstrap/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="../resources/css/style.css"/>" rel="stylesheet" type="text/css"/>
@@ -23,11 +24,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
         <title>Lista</title>
         <script>
-            window.onload = function(){
+            $(document).ready(function() {
                 var ok = sessionStorage.getItem('confirmation_ok');
                 document.getElementById('ok').innerHTML = ok;
                 sessionStorage.removeItem('confirmation_ok');
-            }
+                
+                var permissao = '<%=request.getSession().getAttribute("permissao")%>';
+                if(permissao =='1'){
+                    document.getElementById('btnAdicionar').style.display = 'block';
+                }else{
+                    document.getElementById('btnAdicionar').style.display = 'none';
+                }
+            });
         </script>
     </head>
     <body>

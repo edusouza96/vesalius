@@ -14,7 +14,7 @@
         <meta name="theme-color" content="#0000ff"/>
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
-
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="<c:url value="../resources/bootstrap/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="../resources/css/style.css"/>" rel="stylesheet" type="text/css"/>
@@ -49,9 +49,17 @@
                             <td>${paciente.nomePaciente}</td>
                             <td>${paciente.telefonePaciente}</td>
                             <td>
-                                 <a href="../prontuario/paciente-${paciente.idPaciente}" class="btn btn-warning btn-sm">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </a>
+                               
+                                <%
+                                    int permissao = (Integer) request.getSession().getAttribute("permissao");
+                                    if(permissao == 1){
+                                %>
+                                    <a href="../prontuario/paciente-${paciente.idPaciente}" class="btn btn-warning btn-sm">
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </a>
+                                <%
+                                    }
+                                %>
                                 &emsp;
                                 <a href="editar-${paciente.idPaciente}" class="btn btn-info btn-sm">
                                     <span class="glyphicon glyphicon-pencil"></span>
