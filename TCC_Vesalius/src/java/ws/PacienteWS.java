@@ -1,6 +1,7 @@
 package ws;
 
 import com.google.gson.Gson;
+import dao.LoginDAO;
 import dao.PacienteDAO;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -13,7 +14,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import model.Login;
 import model.Paciente;
+import util.Util;
 
 /**
  * REST Web Service
@@ -73,6 +76,15 @@ public class PacienteWS {
         Paciente paciente = (Paciente) g.fromJson(content, Paciente.class);
         PacienteDAO dao =  new PacienteDAO();
         dao.salvar(paciente);
+        LoginDAO lgDao = new LoginDAO();
+        Login login = new Login();
+        String cpf = paciente.getCpfPaciente().replaceAll("\\.", "");
+        cpf = cpf.replaceAll("-", "");
+        String dadosAcesso = new Util().sha256(cpf);
+        login.setPaciente(paciente);
+        login.setUserLogin(dadosAcesso);
+        login.setPasswordLogin(dadosAcesso);
+        lgDao.salvar(login);
     }
     
     @PUT

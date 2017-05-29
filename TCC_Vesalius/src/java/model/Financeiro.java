@@ -5,10 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
-import static model.Procedimento_.nomeProcedimento;
-import static model.Procedimento_.valorProcedimento;
 
 /**
  * Classe Financeiro, responsável por modelar o objeto referente a movimentação de caixa da clinica

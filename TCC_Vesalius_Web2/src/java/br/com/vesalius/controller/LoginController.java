@@ -5,9 +5,8 @@
  */
 package br.com.vesalius.controller;
 
-import br.com.vesalius.dao.HttpPacienteDAO;
+import br.com.vesalius.dao.HttpLoginDAO;
 import br.com.vesalius.dominio.Login;
-import br.com.vesalius.dominio.Paciente;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,49 +24,38 @@ public class LoginController{
     public String login(Model model){
         return "login/login";
     }
-    
-    @RequestMapping("/login/dentista")
-    public String dentista(Model model, HttpSession session){
+
+//    @RequestMapping("/login/dentista")
+//    public String dentista(Model model, HttpSession session){
+//        try {
+//            Paciente paciente = new Paciente();
+//            paciente.setIdPaciente(25);
+//            paciente = new HttpPacienteDAO().buscar(paciente);
+//            Login login = new Login(paciente);
+//            session.setAttribute("user", login);
+//            session.setAttribute("permissao", login.getPaciente().getTipoAcessos());
+//            model.addAttribute("redirect","../agenda/");
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        }
+//        return "redirect";
+//    }
+
+    @RequestMapping("/login/auth")
+    public String auth(Model model, Login login, HttpSession session){
         try {
-            Paciente paciente = new Paciente();
-            paciente.setIdPaciente(25);
-            paciente = new HttpPacienteDAO().buscar(paciente);
-            Login login = new Login(paciente);
-            session.setAttribute("user", login);
-            session.setAttribute("permissao", login.getPaciente().getTipoAcessos());
-            model.addAttribute("redirect","../agenda/");
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return "redirect";
-    }
-    
-    @RequestMapping("/login/secretaria")
-    public String secretaria(Model model, HttpSession session){
-        try {
-            Paciente paciente = new Paciente();
-            paciente.setIdPaciente(2);
-            paciente = new HttpPacienteDAO().buscar(paciente);
-            Login login = new Login(paciente);
-            session.setAttribute("user", login);
-            session.setAttribute("permissao", login.getPaciente().getTipoAcessos());
-            model.addAttribute("redirect","../agenda/");
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return "redirect";
-    }
-    
-    @RequestMapping("/login/paciente")
-    public String paciente(Model model, HttpSession session){
-        try {
-            Paciente paciente = new Paciente();
-            paciente.setIdPaciente(31);
-            paciente = new HttpPacienteDAO().buscar(paciente);
-            Login login = new Login(paciente);
-            session.setAttribute("user", login);
-            session.setAttribute("permissao", login.getPaciente().getTipoAcessos());
-            model.addAttribute("redirect","../agenda/");
+            Login login1;
+            login1 = new HttpLoginDAO().buscar(login);
+            if(login1.getIdLogin() > 0){
+                session.setAttribute("user", login1);
+                session.setAttribute("permissao", login1.getPaciente().getTipoAcessos());
+                model.addAttribute("redirect","http://localhost:5000/index.html?paciente="+login1.getPaciente().getIdPaciente());
+//                model.addAttribute("redirect","../agenda/");
+            }else{
+                System.out.println("nao passou");
+                model.addAttribute("redirect","../login/");
+            }
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }

@@ -2,8 +2,12 @@
  * Classe com metodos uteis
  */
 package util;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -178,5 +182,25 @@ public class Util {
         }else{
             return new SimpleDateFormat("yyyy-MM-01").format(data);
         }
+    }
+    
+    /**
+     * Método para criptografia
+     * @param input
+     * @return 
+     */
+    public String sha256(String input){
+        MessageDigest mDigest;
+        StringBuffer sb = new StringBuffer();
+        try {
+            mDigest = MessageDigest.getInstance("SHA-256");
+            byte[] result = mDigest.digest(input.getBytes());
+            for (int i = 0; i < result.length; i++) {
+                sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sb.toString();
     }
 }

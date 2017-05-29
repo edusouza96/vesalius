@@ -7,6 +7,9 @@ and open the template in the editor.
     Created on : 29/01/2017, 15:39:01
     Author     : Edu
 */
+*{
+    font-family: calibri;        
+}
 
 #headTable{
     text-align: center;

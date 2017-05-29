@@ -103,4 +103,8 @@ public class PacienteController {
         
         return "redirect";
     }
+    @RequestMapping("/paciente/vue")
+    public String login(Model model){
+        return "paciente/vue";
+    }
 }

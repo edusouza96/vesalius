@@ -17,7 +17,7 @@ public class AutorizadorInterceptor  extends HandlerInterceptorAdapter{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object controller) throws Exception {
       String caminho = "../login/";
       String uri = request.getRequestURI();
-      if(uri.endsWith("/login/") || uri.endsWith("/login/dentista") || uri.endsWith("/login/secretaria") || uri.endsWith("/login/paciente") || uri.contains("resources")){
+      if(uri.endsWith("/login/") || uri.endsWith("/login/auth") || uri.contains("resources")){
         return true;
       }
       

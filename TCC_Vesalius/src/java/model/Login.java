@@ -1,25 +1,31 @@
-package br.com.vesalius.dominio;
+package model;
 
-import br.com.vesalius.util.Util;
 import java.io.Serializable;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Classe Login
+ * Classe Login responsável por modelar o objeto referente aos logins dos usuarios
  * @author Edu
  */
-
-public class Login implements Serializable{
+@Entity
+@XmlRootElement
+public class Login implements Serializable {
+    @Id 
+    @GeneratedValue
     private int idLogin;
+    @OneToOne
     private Paciente paciente;
+    @Column(name = "userLogin",unique = true)
     private String userLogin;
     private String passwordLogin;
 
     public Login() {
-    }
-
-    public Login(Paciente paciente) {
-        this.paciente = paciente;
     }
 
     public int getIdLogin() {
@@ -30,7 +36,6 @@ public class Login implements Serializable{
         this.idLogin = idLogin;
     }
 
-    
     public Paciente getPaciente() {
         return paciente;
     }
@@ -44,7 +49,7 @@ public class Login implements Serializable{
     }
 
     public void setUserLogin(String userLogin) {
-        this.userLogin = new Util().sha256(userLogin);
+        this.userLogin = userLogin;
     }
 
     public String getPasswordLogin() {
@@ -52,8 +57,9 @@ public class Login implements Serializable{
     }
 
     public void setPasswordLogin(String passwordLogin) {
-        this.passwordLogin = new Util().sha256(passwordLogin);
+        this.passwordLogin = passwordLogin;
     }
+    
     
     
 }

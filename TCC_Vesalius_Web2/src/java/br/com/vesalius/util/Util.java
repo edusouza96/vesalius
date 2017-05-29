@@ -3,8 +3,15 @@
  */
 package br.com.vesalius.util;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -180,6 +187,57 @@ public class Util {
             return new SimpleDateFormat("yyyy-MM-01").format(data);
         }
     }
+    
+    /**
+     * Método para criptografia
+     * @param input
+     * @return 
+     */
+    public String sha256(String input){
+        MessageDigest mDigest;
+        StringBuffer sb = new StringBuffer();
+        try {
+            mDigest = MessageDigest.getInstance("SHA-256");
+            byte[] result = mDigest.digest(input.getBytes());
+            for (int i = 0; i < result.length; i++) {
+                sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sb.toString();
+    }
+    
+    public List<String> generationColor(){
+        Random randCol = new Random();  
+        int r = randCol.nextInt(255);  
+        int g = randCol.nextInt(255);  
+        int b = randCol.nextInt(255); 
+        List<String> list = new ArrayList<>();
+        list.add("rgb("+r+","+g+","+b+")");
+        list.add("rgba("+r+","+g+","+b+",0.5)");
+        return list;
+    }
+    
+    public String showMonthYear(String date){
+        String[] dateFormat = date.split("-");
+        ArrayList<String> month = new ArrayList<>();
+        month.add(0, "");
+        month.add(1, "Janeiro");
+        month.add(2, "Fevereiro");
+        month.add(3, "Março");
+        month.add(4, "Abril");
+        month.add(5, "Maio");
+        month.add(6, "Junho");
+        month.add(7, "Julho");
+        month.add(8, "Agosto");
+        month.add(9, "Setembro");
+        month.add(10, "Outubro");
+        month.add(11, "Novembro");
+        month.add(12, "Dezembro");
+        return month.get(Integer.parseInt(dateFormat[1]))+"/"+dateFormat[0];
+    }
+    
 //        Gravar em arquivo
 //        FileWriter arq = new FileWriter("C:\\Users\\Eduardo\\Desktop\\tst\\teste.txt");
 //        PrintWriter gravarArq = new PrintWriter(arq);

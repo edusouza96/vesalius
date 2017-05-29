@@ -13,23 +13,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="<c:url value="../resources/bootstrap/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="../resources/css/style.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="../resources/css/styleLogin.css"/>" rel="stylesheet" type="text/css"/>
         <title>Login</title>
     </head>
-    <body>
+    <body>                
         <div class="container">
-            <form method="POST" action="dentista">
-                <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
-                        <div class="form-group">
-                            <a href="dentista" class="btn btn-danger btn-sm">Dentista</a>
-                            <a href="secretaria" class="btn btn-danger btn-sm">Secretaria</a>
-                            <a href="paciente" class="btn btn-danger btn-sm">paciente</a>
-                            
-                        </div>
-                    </div>
-                </div>
+            <form class="form-signin" method="POST" action="auth">
+              <h2 class="form-signin-heading">Login</h2>
+              
+              <label for="userLogin" class="sr-only">Usuario</label>
+              <input type="text" name="userLogin" id="userLogin" class="form-control" placeholder="Usuario" required autofocus>
+              
+              <label for="passwordLogin" class="sr-only">Senha</label>
+              <input type="password" name="passwordLogin" id="passwordLogin" class="form-control" placeholder="Senha" required>
+              
+              <input class="btn btn-lg btn-primary btn-block" type="submit" value="Entrar">
             </form>
         </div>
     </body>
 </html>
-
