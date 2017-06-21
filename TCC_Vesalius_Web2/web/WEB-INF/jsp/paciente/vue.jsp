@@ -7,7 +7,7 @@
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
 
-        <link rel="shortcut icon" href="../resources/img/favicon.ico"/>
+        <link rel="shortcut icon" href="../resources/img/icone.png"/>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link href="../resources/css/style.css" rel="stylesheet" type="text/css"/> 
         <link href="../resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>

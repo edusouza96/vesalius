@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="shortcut icon" href="<c:url value="../resources/img/favicon.ico"/>"/>
+        <link rel="shortcut icon" href="<c:url value="../resources/img/icone.png"/>"/>
         <meta name="theme-color" content="#0000ff"/>
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
@@ -33,7 +33,7 @@
                 <input type="hidden" name="idPaciente" id="idPaciente" value="${prontuario.idPaciente}" class="form-control"/>
                 <p id="ok">${ok}</p>
                 <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                    <div class="col-xs-12 col-sm-12 col-lg-7 col-md-12">
                         <div class="form-group">
                             <label for="idProcedimento">Procedimento</label>
                             <select name="idProcedimento" id="idProcedimento" class="form-control" require>
@@ -46,14 +46,14 @@
                 </div>
                         
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <div class="col-xs-12 col-sm-12 col-lg-3 col-md-12">
                         <div class="form-group">
                             <label for="denteProntuario">Dente</label>
                             <input type="text" name="denteProntuario" id="denteProntuario" value="${prontuario.denteProntuario}" class="form-control"/>
                         </div>
                     </div>
                         
-                    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <div class="col-xs-12 col-sm-12 col-lg-4 col-md-12">
                         <div class="form-group">
                             <label for="tempoProntuario">Tempo</label>
                             <input type="text" name="tempoProntuario" id="tempoProntuario" value="${prontuario.tempoProntuario}" class="form-control"/>
@@ -62,7 +62,7 @@
                 </div>
                 
                 <div class="row">                        
-                    <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                    <div class="col-xs-12 col-sm-12 col-lg-7 col-md-12">
                         <div class="form-group">
                             <label for="descricaoProntuario">Descrição</label>
                             <textarea name="descricaoProntuario" id="descricaoProntuario" class="form-control">${prontuario.descricaoProntuario}</textarea>

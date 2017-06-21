@@ -6,11 +6,110 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        
+        <script>
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('../resources/serviceWorker.js')
+                .then(function () {
+                  console.log('service worker registered');
+                })
+                .catch(function () {
+                  console.warn('service worker failed');
+                });
+            }
+
+        </script>
         <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="img/icone.png">
+        <meta name="theme-color" content="#007fbf">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="appple-mobile-web-app-capable" content="yes">
+        <meta name="msapplication-starturl" content="/">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta charset='utf-8'>
+        <link href="manifest.json" rel="manifest" />
+        <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="fullcalendar-3.2.0/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
+        <link href="fullcalendar-3.2.0/fullcalendar.print.min.css" rel="stylesheet" media="print" type="text/css"/>
+        <script type="text/javascript" src="fullcalendar-3.2.0/lib/moment.min.js"></script>
+        <script type="text/javascript" src="fullcalendar-3.2.0/lib/jquery.min.js"></script>
+        <script type="text/javascript" src="fullcalendar-3.2.0/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="fullcalendar-3.2.0/locale-all.js"></script>
+        <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>  
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        
+        <script>
+        
+            $(document).ready(function() {
+                $('#calendar').fullCalendar({
+                        header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,agendaWeek,agendaDay,listWeek'
+                        },
+                        defaultDate: '2017-06-18',
+                        locale: 'pt-br',
+                        navLinks: true, // can click day/week names to navigate views
+
+                        selectable: true,
+                        selectHelper: true,
+                        editable: true,
+                        eventLimit: true, // allow "more" link when too many events
+                        events: [
+                                    {
+                                        title: 'Event1',
+                                        start: '2015-10-10 12:30:00',
+                                      end: '2015-10-10 16:30:00'
+                                    },
+                                    {
+                                        title: 'Event2',
+                                        start: '2015-10-07 17:30:00',
+                                      end: '2015-10-07 21:30:00'
+                                    }
+                                ]                       
+                });
+
+            });
+            
+            
+        </script>
+        <style>
+
+                body {
+                    margin: 40px 10px;
+                    padding: 0;
+                    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+                    font-size: 14px;
+                }
+
+                #calendar {
+                    max-width: 900px;
+                    margin: 0 auto;
+                }
+
+                .fc-day-number{
+                    color: #000;
+                }
+                #dialog{
+                    overflow: hidden;
+                    display: none;
+                }
+
+        </style>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div id='calendar'></div>
     </body>
 </html>
+<!--    <link href="../resources/manifest.json" rel="manifest">
+    <link href="../resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/fullcalendar-3.2.0/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../resources/fullcalendar-3.2.0/fullcalendar.print.min.css" rel="stylesheet" media="print" type="text/css"/>
+    <script type="text/javascript" src="../resources/fullcalendar-3.2.0/lib/moment.min.js"></script>
+    <script type="text/javascript" src="../resources/fullcalendar-3.2.0/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="../resources/fullcalendar-3.2.0/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="../resources/fullcalendar-3.2.0/locale-all.js"></script>
+    <link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css"/>  
+    <script type="text/javascript" src="../resources/js/jquery-ui.js"></script>
+    <link href="../resources/css/style.css" rel="stylesheet" type="text/css"/>  -->

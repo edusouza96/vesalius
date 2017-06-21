@@ -6,7 +6,7 @@
 <html lang="pt-BR">
     <head>
         <meta charset="utf-8">
-        <link rel="shortcut icon" href="<c:url value="../resources/img/favicon.ico"/>"/>
+        <link rel="shortcut icon" href="<c:url value="../resources/img/icone.png"/>"/>
         <meta name="theme-color" content="#0000ff"/>
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>

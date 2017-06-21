@@ -10,13 +10,28 @@
 <!DOCTYPE html>
 <html lang="pt-br" Xmanifest="appcache.manifest">
 <head>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('../resources/serviceWorker.js')
+            .then(function () {
+              console.log('service worker registered');
+            })
+            .catch(function () {
+              console.warn('service worker failed');
+            });
+        }
+        
+    </script>
     <title>Vesalius</title>
-    <link rel="shortcut icon" href="<c:url value="../resources/img/favicon.ico"/>"/>
-    <meta name="theme-color" content="#0000ff"/>
+    <link rel="shortcut icon" href="<c:url value="../resources/img/icone.png"/>"/>
+    <meta name="theme-color" content="#007fbf"/>
     <meta name="mobile-web-app-capable" content="yes"/>
-    <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
+    <meta name="appple-mobile-web-app-capable" content="yes"/>
+    <meta name="msapplication-starturl" content="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
         
     <meta charset='utf-8' />
+    <link href="<c:url value="../resources/manifest.json"/>" rel="manifest" />
     <link href="<c:url value="../resources/bootstrap/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="../resources/fullcalendar-3.2.0/fullcalendar.min.css"/>" rel="stylesheet" type="text/css"/>
     <link href="<c:url value="../resources/fullcalendar-3.2.0/fullcalendar.print.min.css"/>" rel="stylesheet" media="print" type="text/css"/>
@@ -24,11 +39,12 @@
     <script type="text/javascript" src="<c:url value="../resources/fullcalendar-3.2.0/lib/jquery.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="../resources/fullcalendar-3.2.0/fullcalendar.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="../resources/fullcalendar-3.2.0/locale-all.js"/>"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link href="<c:url value="../resources/css/jquery-ui.css"/>" rel="stylesheet" type="text/css"/>  
+    <script type="text/javascript" src="<c:url value="../resources/js/jquery-ui.js"/>"></script>
     <link href="<c:url value="../resources/css/style.css"/>" rel="stylesheet" type="text/css"/>    
-
+    
     <script>
+        
         $(document).ready(function() {
             var ok = sessionStorage.getItem('confirmation_ok');
             document.getElementById('ok').innerHTML = ok;
@@ -141,6 +157,7 @@
     </style>
 </head>
 <body>
+    
     <jsp:include page="../inc/menu.jsp"/>
     <p id="ok">${ok}</p>
     <div id='calendar'></div>

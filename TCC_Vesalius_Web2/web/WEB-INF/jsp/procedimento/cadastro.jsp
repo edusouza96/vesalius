@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="shortcut icon" href="<c:url value="../resources/img/favicon.ico"/>"/>
+        <link rel="shortcut icon" href="<c:url value="../resources/img/icone.png"/>"/>
         <meta name="theme-color" content="#0000ff"/>
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
@@ -26,7 +26,7 @@
             <form action="cadastro" method="POST">
                 <p id="ok">${ok}</p>
                 <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                    <div class="col-xs-12 col-sm-10 col-lg-7 col-md-10">
                         <div class="form-group">
                             <label for="nomeProcedimento">Nome</label>
                             <input type="text" name="nomeProcedimento" id="nomeProcedimento" value="${procedimento.nomeProcedimento}" class="form-control" required/>
@@ -36,7 +36,7 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <div class="col-xs-12 col-sm-8 col-lg-4 col-md-8">
                         <div class="form-group">
                             <label for="valorProcedimento">Valor</label>
                             <input type="text" name="valorProcedimento" id="valorProcedimento" value="${procedimento.valorProcedimento}" class="form-control"/>

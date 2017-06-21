@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="shortcut icon" href="<c:url value="../resources/img/favicon.ico"/>"/>
+        <link rel="shortcut icon" href="<c:url value="../resources/img/icone.png"/>"/>
         <meta name="theme-color" content="#0000ff"/>
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="<c:url value="../resources/bootstrap/css/bootstrap.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="../resources/css/style.css"/>" rel="stylesheet" type="text/css"/>
-        <title>Adicionar Despezas</title>
+        <title>Adicionar Despesas</title>
     </head>
     <body>
         <jsp:include page="../inc/menu.jsp"/>
@@ -26,7 +26,7 @@
             <p id="ok">${ok}</p>
             <form action="cadastro" method="POST">
                 <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                    <div class="col-xs-12 col-sm-12 col-lg-7 col-md-12">
                         <div class="form-group">
                             <label for="tituloFinanceiro">Titulo</label>
                             <input type="text" name="tituloFinanceiro" id="tituloFinanceiro" value="${financeiro.tituloFinanceiro}" class="form-control" required/>
@@ -36,7 +36,7 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <div class="col-xs-12 col-sm-12 col-lg-5 col-md-10">
                         <div class="form-group">
                             <label for="valorFinanceiro">Valor</label>
                             <input type="text" name="valorFinanceiro" id="valorFinanceiro" value="${financeiro.valorFinanceiro}" class="form-control" required/>
@@ -45,7 +45,7 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <div class="col-xs-12 col-sm-12 col-lg-5 col-md-10">
                         <div class="form-group">
                             <label for="vencimentoFinanceiro">Vencimento</label>
                             <input type="date" name="vencimentoFinanceiroStr" id="vencimentoFinanceiroStr" value="${financeiro.vencimentoFinanceiroStr}" class="form-control" required/>

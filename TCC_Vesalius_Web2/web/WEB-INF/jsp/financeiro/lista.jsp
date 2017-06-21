@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="pt-br" Xmanifest="appcache.manifest">
     <head>
-        <link rel="shortcut icon" href="<c:url value="../resources/img/favicon.ico"/>"/>
+        <link rel="shortcut icon" href="<c:url value="../resources/img/icone.png"/>"/>
         <meta name="theme-color" content="#0000ff"/>
         <meta name="mobile-web-app-capable" content="yes"/>
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
@@ -50,16 +50,16 @@
                         <th id="headTable" colspan="12" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                             Financeiro                        
                             <a href="cadastro" id="btnAdicionar" class="btn btn-success btn-sm">
-                                <span class="glyphicon glyphicon-plus">Adicionar<br>Despezas</span>
+                                <span class="glyphicon glyphicon-plus">Adicionar<br>Despesas</span>
                             </a>
                             
                         </th>
                     </tr>
                     <tr>
                         <th class="col-xs-2 col-sm-2 col-lg-2 col-md-2"></th>
-                        <th class="col-xs-6 col-sm-6 col-lg-6 col-md-6"></th>
+                        <th class="col-xs-5 col-sm-5 col-lg-5 col-md-5"></th>
                         <th class="col-xs-2 col-sm-2 col-lg-2 col-md-2"></th>
-                        <th class="col-xs-2 col-sm-2 col-lg-2 col-md-2"></th>
+                        <th class="col-xs-3 col-sm-3 col-lg-3 col-md-3"></th>
                     </tr>
                 </thead>
                 <tbody>
