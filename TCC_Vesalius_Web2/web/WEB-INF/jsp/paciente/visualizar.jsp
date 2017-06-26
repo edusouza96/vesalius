@@ -219,7 +219,7 @@
                 </div>
                 
                 <div class="row cadastro-completo">                    
-                    <div class="col-xs-12 col-sm-12 col-lg-3 col-md-6"><div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <div class="col-xs-12 col-sm-12 col-lg-3 col-md-6">
                         <div class="form-group">
                             <label for="facebookPaciente">Facebook</label>
                             <input type="text" name="facebookPaciente" id="facebookPaciente" value="${paciente.facebookPaciente}" class="form-control" readonly="readonly"/>

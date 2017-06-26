@@ -49,7 +49,7 @@ public class LoginController{
             if(login1.getIdLogin() > 0){
                 session.setAttribute("user", login1);
                 session.setAttribute("permissao", login1.getPaciente().getTipoAcessos());
-                model.addAttribute("redirect","http://localhost:5000/index.html?paciente="+login1.getPaciente().getIdPaciente());
+                model.addAttribute("redirect","http://localhost:5000/index.html?wait="+login1.getPaciente().getIdPaciente());
 //                model.addAttribute("redirect","../agenda/");
             }else{
                 System.out.println("nao passou");

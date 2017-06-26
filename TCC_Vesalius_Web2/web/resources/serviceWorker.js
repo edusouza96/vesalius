@@ -1,41 +1,49 @@
-var CACHE_NAME = 'static-v2';
- 
-self.addEventListener('install', function (event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll([
-        '/',
-        'index.html',
-        'manifest.js',
-        'js/jquery.js',
-        'js/jquery.maskedinput.js',
-        'js/Chart.min.js',
-        'img/icone144.png',
+var files = [
+  "index.html"
+];
+// dev only
+if (typeof files == 'undefined') {
+  var files = [];
+} else {
+  //files.push('./');
+}
 
-      ]);
-    })
-  )
-});
- 
-self.addEventListener('activate', function activator(event) {
+var CACHE_NAME = 'vesalius-v02';
+
+self.addEventListener('activate', function(event) {
+  console.log('[SW] Activate');
   event.waitUntil(
-    caches.keys().then(function (keys) {
-      return Promise.all(keys
-        .filter(function (key) {
-          return key.indexOf(CACHE_NAME) !== 0;
-        })
-        .map(function (key) {
-          return caches.delete(key);
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (CACHE_NAME.indexOf(cacheName) == -1) {
+            console.log('[SW] Delete cache:', cacheName);
+            return caches.delete(cacheName);
+          }
         })
       );
     })
   );
 });
- 
-self.addEventListener('fetch', function (event) {
+
+self.addEventListener('install', function(event){
+  console.log('[SW] Install');
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function(cache) {
+      return Promise.all(
+      	files.map(function(file){
+      		return cache.add(file);
+      	})
+      );
+    })
+  );
+});
+
+self.addEventListener('fetch', function(event) {
+  console.log('[SW] fetch ' + event.request.url)
   event.respondWith(
-    caches.match(event.request).then(function (cachedResponse) {
-      return cachedResponse || fetch(event.request);
+    caches.match(event.request).then(function(response){
+      return response || fetch(event.request.clone());
     })
   );
 });

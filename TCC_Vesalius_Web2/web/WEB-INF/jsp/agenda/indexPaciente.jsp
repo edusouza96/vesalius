@@ -25,14 +25,19 @@
     <script type="text/javascript" src="<c:url value="../resources/fullcalendar-3.2.0/lib/jquery.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="../resources/fullcalendar-3.2.0/fullcalendar.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="../resources/fullcalendar-3.2.0/locale-all.js"/>"></script>
-    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
     <link href="<c:url value="../resources/css/jquery-ui.css"/>" rel="stylesheet" type="text/css"/>  
     <script type="text/javascript" src="<c:url value="../resources/js/jquery-ui.js"/>"></script>
-    <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
     <link href="<c:url value="../resources/css/style.css"/>" rel="stylesheet" type="text/css"/>    
 
     <script>
         $(document).ready(function() {
+            var arrayConsultas = new Array(${lista});
+            var arrayConsultas2 = new Array();
+            for (i=0;i<arrayConsultas.length; i++){
+                arrayConsultas2.push(JSON.stringify(arrayConsultas[i]));
+            }
+            localStorage.setItem('consultas',arrayConsultas2.join('|'));
+            
             $('#calendar').fullCalendar({
                     header: {
                             left: 'prev,next today',

@@ -8,20 +8,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7"/>
 
         <link rel="shortcut icon" href="../resources/img/icone.png"/>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <link href="../resources/css/style.css" rel="stylesheet" type="text/css"/> 
         <link href="../resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <link href="../resources/fullcalendar-3.2.0/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
         <link href="../resources/fullcalendar-3.2.0/fullcalendar.print.min.css" rel="stylesheet" media="print" type="text/css"/>
 
-        <script src="https://unpkg.com/vue"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.8/vue.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.1.16/vue-resource.min.js"></script>
+        <script type="text/javascript" src="../resources/js/vue234.js"></script>
+        <script type="text/javascript" src="../resources/js/vue.js"></script>
+        <script type="text/javascript" src="../resources/js/vue-resource.min.js"></script>
         <script type="text/javascript" src="../resources/fullcalendar-3.2.0/lib/moment.min.js"></script>
         <script type="text/javascript" src="../resources/fullcalendar-3.2.0/lib/jquery.min.js"></script>
         <script type="text/javascript" src="../resources/fullcalendar-3.2.0/fullcalendar.min.js"></script>
         <script type="text/javascript" src="../resources/fullcalendar-3.2.0/locale-all.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script type="text/javascript" src="../resources/js/jquery-ui.js"></script>
         <style>
             
             body {

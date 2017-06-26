@@ -1,15 +1,67 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
-        
+        <style>
+            body {
+               margin:0;
+            }
+            ul.topnav {
+              list-style-type: none;
+              margin: 0 0 5% 0;
+              padding: 0;
+              overflow: hidden;
+              background-color: #007fbf;
+            }
+
+            #btnSair{
+                float: right;
+            }
+            ul.topnav li {float: left;}
+
+            ul.topnav li a {
+              display: inline-block;
+              color: #f2f2f2;
+              text-align: center;
+              padding: 14px 16px;
+              text-decoration: none;
+              transition: 0.3s;
+              font-size: 17px;
+            }
+
+            ul.topnav li a:hover {background-color: #007fbf;}
+
+            ul.topnav li.icon {display: none;}
+
+            @media screen and (max-width:780px) {
+              ul.topnav li:not(:first-child) {display: none;}
+              ul.topnav li.icon {
+                float: right;
+                display: inline-block;
+              }
+            }
+
+            @media screen and (max-width:780px) {
+              ul.topnav.responsive {position: relative;}
+              ul.topnav.responsive li.icon {
+                position: absolute;
+                right: 0;
+                top: 0;
+              }
+              ul.topnav.responsive li {
+                float: none;
+                display: inline;
+              }
+              ul.topnav.responsive li a {
+                display: block;
+                text-align: left;
+              }
+            }
+        </style>
         <script>
+            
             if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.register('../resources/serviceWorker.js')
+              navigator.serviceWorker.register('serviceWorker.js')
                 .then(function () {
                   console.log('service worker registered');
                 })
@@ -17,10 +69,17 @@ and open the template in the editor.
                   console.warn('service worker failed');
                 });
             }
-
+            function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "topnav";
+                }
+            }
         </script>
-        <title>TODO supply a title</title>
-        <link rel="shortcut icon" href="img/icone.png">
+        <title>Vesalius</title>
+        <link rel="shortcut icon" href="img/icone96.png">
         <meta name="theme-color" content="#007fbf">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="appple-mobile-web-app-capable" content="yes">
@@ -42,7 +101,17 @@ and open the template in the editor.
         <script>
         
             $(document).ready(function() {
-                $('#calendar').fullCalendar({
+                
+                var consultas = localStorage.getItem('consultas');
+                var arrayConsultas = new Array();
+                if(consultas != null){
+                    consultas = consultas.split('|');
+                    for (i = 0; i < consultas.length; i++) {
+                        arrayConsultas.push(JSON.parse(consultas[i]));
+                    }
+                }
+
+                    $('#calendar').fullCalendar({
                         header: {
                                 left: 'prev,next today',
                                 center: 'title',
@@ -56,18 +125,7 @@ and open the template in the editor.
                         selectHelper: true,
                         editable: true,
                         eventLimit: true, // allow "more" link when too many events
-                        events: [
-                                    {
-                                        title: 'Event1',
-                                        start: '2015-10-10 12:30:00',
-                                      end: '2015-10-10 16:30:00'
-                                    },
-                                    {
-                                        title: 'Event2',
-                                        start: '2015-10-07 17:30:00',
-                                      end: '2015-10-07 21:30:00'
-                                    }
-                                ]                       
+                        events: arrayConsultas                      
                 });
 
             });
@@ -77,7 +135,7 @@ and open the template in the editor.
         <style>
 
                 body {
-                    margin: 40px 10px;
+                    /*margin: 40px 10px;*/
                     padding: 0;
                     font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
                     font-size: 14px;
@@ -99,6 +157,12 @@ and open the template in the editor.
         </style>
     </head>
     <body>
+        <ul class="topnav" id="myTopnav">
+          <li id="menuAgenda"><a class="active" >Agenda</a></li>
+          <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+          </li>
+        </ul>
         <div id='calendar'></div>
     </body>
 </html>

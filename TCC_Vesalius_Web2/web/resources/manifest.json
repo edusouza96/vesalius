@@ -4,14 +4,24 @@
   "theme_color": "#007fbf",
   "background_color": "#007fbf",
   "display": "standalone",
-  "start_url": "/TCC_Vesalius_Web2/agenda",
-  "scope": "/TCC_Vesalius_Web2/agenda",
+  "start_url": "index.html",
+  "scope": "index.html",
   "name": "Vesalius",
   "short_name": "Vesalius",
   "icons": [
     {
+      "src": "img/icone192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
       "src": "img/icone144.png",
       "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icone96.png",
+      "sizes": "96x96",
       "type": "image/png"
     },
     {
